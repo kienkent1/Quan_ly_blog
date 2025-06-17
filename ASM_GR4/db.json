@@ -1,0 +1,116 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin",
+      "displayName": "Admin",
+      "avatarUrl": null
+    },
+    {
+      "id": "2",
+      "email": "user@example.com",
+      "password": "user123",
+      "role": "user",
+      "displayName": "Normal User",
+      "avatarUrl": "/uploads/avatar-1749963011525-869517008.jpg"
+    },
+    {
+      "id": "58dc",
+      "email": "kienpxtb00438@fpt.edu.vn",
+      "displayName": "Phung Xuong Kien (PTCD DGN)",
+      "avatarUrl": "/uploads/avatar-1750046167450-158140131.png",
+      "role": "admin",
+      "loginMethod": "google",
+      "password": null
+    },
+    {
+      "id": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "email": "test1@test.t",
+      "password": "test123",
+      "displayName": "test1",
+      "role": "user",
+      "avatarUrl": "/uploads/avatar-1750033353706-648257588.jpg",
+      "loginMethod": "local"
+    },
+    {
+      "id": "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9",
+      "email": "a@a.a",
+      "password": "a12345",
+      "displayName": "a",
+      "role": "user",
+      "avatarUrl": null,
+      "loginMethod": "local"
+    },
+    {
+      "id": "786910fe-38c0-45e2-bd19-bca7e0bc811f",
+      "email": "b@b.b",
+      "password": "b12345",
+      "displayName": "b",
+      "role": "user",
+      "avatarUrl": null,
+      "loginMethod": "local"
+    },
+    {
+      "id": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "email": "xuongkienphung@gmail.com",
+      "password": null,
+      "displayName": "Xuongkien Phung",
+      "role": "user",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJujQ1qYgYn2LlMmGOhSaXXJkapVO7yasoeBE37a5M_zQU9kA=s96-c",
+      "loginMethod": "google"
+    },
+    {
+      "id": "ffff6c11-1c30-4fa7-85cd-0b7113c2c7f8",
+      "email": "phungxuongkien@gmail.com",
+      "password": "pxk123",
+      "displayName": "phungxuongkien",
+      "role": "user",
+      "avatarUrl": null,
+      "loginMethod": "local"
+    }
+  ],
+  "posts": [
+    {
+      "id": "c10085d2-79dc-4818-bab8-46bcb7bb8d42",
+      "userId": "58dc",
+      "title": "te",
+      "content": null,
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-17T02:52:04.643Z"
+    },
+    {
+      "id": "6bd03392-0ffd-4ddd-8cb5-b9a42022c8b6",
+      "userId": "58dc",
+      "title": "Test1",
+      "content": "ffffffffffffffffffffffffffffffffffffffffffffffff\r\ngrrrrrrrrrrrrrrrrrrrrrrrrrrrr\r\nggggggggggggggggggggggggggggg\r\nddddddddddddddddddddddddddddd\r\nzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-17T02:58:43.930Z"
+    },
+    {
+      "id": "c9ce39b6-ef82-45d9-8729-5b55facd7887",
+      "userId": "58dc",
+      "title": "Test3",
+      "content": "fffffffffffffffffffffffffffff\r\nfffffffffffffffffffffffffffff\r\nfffffffffffffffffffffffffffff",
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-17T03:05:22.684Z"
+    },
+    {
+      "id": "3c976d80-d52d-47c3-8064-611efc541663",
+      "userId": "58dc",
+      "title": null,
+      "content": "cccd",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750129994292-919951759.jpg",
+      "createdAt": "2025-06-17T03:13:14.297Z"
+    },
+    {
+      "id": "e9956aa2-5769-47f1-9476-2150a6b06c86",
+      "userId": "58dc",
+      "title": null,
+      "content": null,
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750130022709-669330342.mp4",
+      "createdAt": "2025-06-17T03:13:42.924Z"
+    }
+  ]
+}

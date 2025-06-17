@@ -1,0 +1,38 @@
+{
+  "name": "asm-gr4",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "server": "node my-backend/server.cjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
+    "bootstrap-vue-next": "^0.30.1",
+    "dotenv": "^16.5.0",
+    "json-server": "^1.0.0-beta.3",
+    "jwt-decode": "^4.0.0",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^7.0.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1",
+    "vue3-google-login": "^2.0.33"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.3",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.1",
+    "vite": "^6.3.5"
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.",
+  "main": "vite.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
