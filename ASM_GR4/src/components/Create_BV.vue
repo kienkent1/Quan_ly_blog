@@ -202,7 +202,6 @@ async function dangBai() {
   if (file.value) {
     formData.append('imageOrVideo', file.value);
   }
-
   try {
     const response = await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
