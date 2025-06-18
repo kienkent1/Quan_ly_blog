@@ -122,6 +122,86 @@
       "createdAt": "2025-06-17T03:13:42.924Z"
     },
     {
+      {
+      "id": "bfeda9ec-817e-4271-bc05-16d81faa7ecd",
+      "userId": "1",
+      "title": "gfhf",
+      "content": "hrhfhf",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750218127027-858229204.jpg",
+      "createdAt": "2025-06-18T03:42:07.029Z"
+    },
+    {
+      "id": "59ede8b5-4a86-4906-bbca-0c7614e77c07",
+      "userId": "1",
+      "title": "Cậu bé bị đao",
+      "content": "cậu bé này mới 18 tuổi...",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750219458478-203206939.jpg",
+      "createdAt": "2025-06-18T04:04:18.480Z"
+    },
+    {
+      "id": "c5fbf8f6-3772-4fce-a9e2-87035db9e091",
+      "userId": "1",
+      "title": "Tin hot nhất biên hòa ngày hôm nay",
+      "content": "cậu bé này bị nghiện game...",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750234690489-839486575.jpg",
+      "createdAt": "2025-06-18T08:18:10.497Z"
+    },
+    {
+      "id": "b17c120f-9955-404a-83d0-eac8a94b1ea7",
+      "userId": "1",
+      "title": "đíh3qe",
+      "content": "3u4h29dhff",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750235804640-959846268.jpg",
+      "createdAt": "2025-06-18T08:36:44.641Z"
+    },
+    {
+      "id": "8d0ba4d6-fd61-4818-995d-2c0c26e258b3",
+      "userId": "1",
+      "title": "nghiện",
+      "content": "12312qdas",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750238617635-188518414.jpg",
+      "createdAt": "2025-06-18T09:23:37.639Z"
+    },
+    {
+      "id": "5f5ab182-2b00-4ee0-8fb9-105dbefa5a69",
+      "userId": "1",
+      "title": "Có đẹp trai không ",
+      "content": "???",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750241917625-372279716.mp4",
+      "createdAt": "2025-06-18T10:18:37.648Z"
+    },
+    {
+      "id": "9b2c6cf1-fb6e-433f-a7b0-adaf7f4f3a26",
+      "userId": "1",
+      "title": "Im lặng đi cô bé",
+      "content": "!!!",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750243623764-541905919.jpg",
+      "createdAt": "2025-06-18T10:47:03.766Z"
+    },
+    {
+      "id": "601c1d6b-e065-4413-ad50-17438a4268a0",
+      "userId": "1",
+      "title": "Ae cứ thế thôi ",
+      "content": "hẹ hẹ hẹ..",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750244799491-576052697.jpg",
+      "createdAt": "2025-06-18T11:06:39.494Z"
+    },
+    {
+      "id": "adb55840-072a-48a4-8a3a-1812fe0d294c",
+      "userId": "1",
+      "title": "24dsdd",
+      "content": "d1d1d",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750248522981-712961956.jpg",
+      "createdAt": "2025-06-18T12:08:42.985Z"
+    },
+    {
+      "id": "fb138ecd-c342-4559-999b-5c2f206e0586",
+      "userId": "1",
+      "title": "24234",
+      "content": "dsdsdsdf",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750248969512-447904883.jpg",
+      "createdAt": "2025-06-18T12:16:09.523Z"
+},
       "id": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
       "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
       "title": "🔔 THÔNG BÁO: SƠ ĐỒ VỊ TRÍ THI – CUỘC THI “CODE ĐAM MÊ – CHẠM TƯƠNG LAI”",
@@ -160,6 +240,8 @@
       "content": "Mặc dù có khá nhiều bài viết, chia sẻ về AI nhưng theo mình là đa phần anh em trong nhóm (95%) vẫn còn chưa biết cách ứng dụng AI vào công việc cho người mới bắt đầu.\r\nDưới đây là tổng hợp 20 khóa học (miễn phí & trả phí) để anh em có thể tham gia, học được tại nhà và ứng dụng được AI ngay vào công việc. Cụ thể:\r\n1. LearnPrompting (https://learnprompting.org/):\r\nTrang này có 4 cấp độ: Beginner, Intermediate, Advanced và ứng dụng về Application. Nội dung tiếng anh, phù hợp mọi cấp độ & MIỄN PHÍ.\r\n2. GPTforWork (https://gptforwork.com/gpt-for-sheets/examples)\r\nHướng dẫn dùng ChatGPT để tạo công thức / hàm excel và vẽ đồ thị.\r\n3. AI Video Maker của @Hiếu AI. (https://hieuai.passio.eco/dp/course/115124):\r\nHướng dẫn chi tiết cách tự tạo 100+ video ngắn chuẩn viral của riêng bạn trong 1 ngày. Mình xin được code giảm 10% cho anh em là NGHIENAI10.\r\n4. PromptEngineering cho ChatGPT (https://www.coursera.org/learn/prompt-engineering) của đại học Vanderbilt.\r\nHướng dẫn tạo prompt, điều chỉnh cho phù hợp với từng công việc (Creators, Social Media, Business...).\r\n5. MidJourney 101 của Printify (https://printify.com/blog/midjourney-prompts/)\r\nHướng dẫn tạo Prompt Midjourney để in ảnh lên Áo thun / Cốc, với ví dụ.\r\n6. MidJourney Prompt MasterClass for AI Art (https://www.udemy.com/course/midjourney-prompt/)\r\nHọc cấu trúc của việc viết Prompt, phát triển kỹ năng tư duy tạo Prompt, cách thêm bớt cho phù hợp và điều chỉnh prompt.\r\n7. GPT01 - Tuyệt đỉnh ứng dụng ChatGPT (https://bit.ly/3rh1M6c)\r\nKhóa học này nói về nội dung cơ bản, nắm nền tảng, tuy nhiên theo mình mọi người nên đăng ký thành viên 199k/tháng để học tất cả các khóa (GPT + word + excel + ...) để tiết kiệm chi phí.\r\n8. You Probably Need A Robot (https://youprobablyneedarobot.com/)\r\nKhóa này dành cho các bạn muốn tiết kiệm 8 - 10 giờ/tuần qua các công cụ AI. Giá không hề rẻ ($199), nhưng cộng đồng chất lượng + có nhiều insight hay.\r\n9. ChatGPT Student's Pack (https://juliandigitaledge.gumroad.com/)\r\nTổng hợp 350 prompts ChatGPT cho Học sinh sinh viên, hàng miễn phí cho anh em dùng.\r\n10. Introduction to Generative AI (https://www.cloudskillsboost.google/course_templates/536)\r\nKhóa này của google, giới thiệu về Generative AI (MidJourney, SD,...) và dùng những công cụ của Google để tạo 1 app AI của riêng bạn.\r\nNgoài ra trên Group thì anh em có thể theo dõi các bài viết của các thành viên cứng như Tony Duc AI Bửu Trung Hồ Thương Tín để học cách ứng dụng AI vào công việc.\r\nThời gian tới thì mình và team sẽ tổng hợp các prompt ChatGPT & MidJourney cho các ngành nghề, anh em có đề xuất nghề nào thì để lại bình luận nhé.",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750236986686-385583487.jpg",
       "createdAt": "2025-06-18T08:56:26.689Z"
+}
+     
     }
   ]
 }
