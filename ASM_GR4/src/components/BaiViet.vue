@@ -6,6 +6,7 @@
       <BCarouselSlide class="carousel-item-height" img-src="https://picsum.photos/1024/480/?image=24" />
     </BCarousel>
 
+
     <div class="container marketing mt-3 d-flex justify-content-between">
       <div class="col-md-8 d-flex flex-column">
         <!-- Danh sách bài viết -->
@@ -22,6 +23,17 @@
         <div class="fw-bold">{{ post.authorName }}</div>
         <div class="text-muted small">{{ post.createdAtFormatted }}</div>
       </div>
+=======
+    <!-- Nhóm bên phải: Thêm "align-items-center" -->
+    <div class="d-flex align-items-center gap-3">
+        <BButton variant="link" class="text-secondary">
+            <i class="bi bi-hand-thumbs-up-fill fs-5"></i>
+        </BButton>
+        <BButton variant="link" class="text-secondary">
+            <i class="bi bi-chat-fill fs-5"></i>
+        </BButton>
+        <p class="mb-0 text-muted fs-5">Thời gian đăng</p>
+
     </div>
 
     <!-- Tiêu đề + Nội dung -->

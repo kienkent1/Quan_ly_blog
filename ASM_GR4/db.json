@@ -69,6 +69,15 @@
       "role": "user",
       "avatarUrl": null,
       "loginMethod": "local"
+    },
+    {
+      "id": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "email": "CNTT@fdfd.fe",
+      "password": "CNTT123",
+      "displayName": "Bộ môn CNTT Fpoly Đồng Nai",
+      "role": "user",
+      "avatarUrl": "/uploads/avatar-1750229102636-368043081.jpg",
+      "loginMethod": "local"
     }
   ],
   "posts": [
@@ -113,6 +122,7 @@
       "createdAt": "2025-06-17T03:13:42.924Z"
     },
     {
+      {
       "id": "bfeda9ec-817e-4271-bc05-16d81faa7ecd",
       "userId": "1",
       "title": "gfhf",
@@ -191,6 +201,47 @@
       "content": "dsdsdsdf",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750248969512-447904883.jpg",
       "createdAt": "2025-06-18T12:16:09.523Z"
+},
+      "id": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
+      "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "title": "🔔 THÔNG BÁO: SƠ ĐỒ VỊ TRÍ THI – CUỘC THI “CODE ĐAM MÊ – CHẠM TƯƠNG LAI”",
+      "content": "📅 Thời gian: 13h00, Thứ Bảy – ngày 14.06.2025\r\n📍 Địa điểm: Hội trường lầu 5 – Trường Cao đẳng FPT Polytechnic cơ sở Đồng Nai\r\n📌 Địa chỉ: 193 Đỗ Văn Thi, Hiệp Hòa, Biên Hòa\r\n🔥 Các chiến binh công nghệ đã sẵn sàng chưa? Dưới đây là sơ đồ xếp chỗ chính thức dành cho các đội thi trong cuộc thi “Code Đam Mê – Chạm Tương Lai” do Bộ môn Công nghệ Thông tin tổ chức! Hãy kiểm tra kỹ sơ đồ để biết được nhóm mình ngồi ở đâu và đến đúng vị trí nhé!\r\n🖥 Cuộc thi là sân chơi lập trình ứng dụng thực tế, nơi các bạn sinh viên sử dụng .NET kết nối với cơ sở dữ liệu Northwind, thể hiện khả năng code app, thiết kế giao diện, xây dựng logic nghiệp vụ và tối ưu xử lý dữ liệu. Đây không chỉ là một thử thách về kỹ thuật mà còn là cơ hội thể hiện đam mê, sự sáng tạo và tinh thần đồng đội.\r\n📌 Lưu ý:\r\nCó mặt trước giờ thi ít nhất 15 phút để ổn định chỗ ngồi và chuẩn bị tinh thần.\r\nMang theo laptop cá nhân, cáp sạc và các tài nguyên cần thiết (dự phòng nếu cần).\r\nTuân thủ nghiêm túc quy định và thời gian cuộc thi.\r\n❤️ BTC Bộ môn CNTT chân thành cảm ơn các bạn sinh viên đã quan tâm và đăng ký tham gia cuộc thi một cách nhiệt tình và đông đảo. Chính sự nhiệt huyết và tinh thần chinh phục công nghệ của các bạn là nguồn động lực để chúng tôi tổ chức cuộc thi này thật chỉn chu, chất lượng và truyền cảm hứng!\r\n📩 Mọi thắc mắc liên quan đến sơ đồ chỗ ngồi hay cuộc thi, vui lòng liên hệ ngay với Ban Tổ Chức để được hỗ trợ nhanh chóng.\r\n💪 Chúc tất cả các đội thi một buổi chiều thi thật tự tin – quyết đoán – bùng nổ sáng tạo và tỏa sáng chiến thắng!",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750229153574-92838855.jpg",
+      "createdAt": "2025-06-18T06:45:53.578Z"
+    },
+    {
+      "id": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
+      "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "title": "📣📣📣 CUỘC THI CODE ĐAM MÊ – CHẠM TƯƠNG LAI BỘ MÔN CÔNG NGHỆ THÔNG TIN – FPT POLYTECHNIC ĐỒNG NAI",
+      "content": "Nhằm tạo sân chơi thực hành lập trình bổ ích, khuyến khích tinh thần sáng tạo và ứng dụng công nghệ trong xây dựng ứng dụng, Bộ môn Công nghệ Thông tin – Cao đẳng FPT Polytechnic Đồng Nai chính thức phát động:\r\n🎯 CUỘC THI CODE ĐAM MÊ – CHẠM TƯƠNG LAI\r\n📅 Thời gian tổ chức: Thứ Bảy, ngày 14/06/2025, vào lúc 13h00\r\n📍 Địa điểm: Phòng hội trường lầu 5, cơ sở 2 Cao đẳng FPT Polytechnic Đồng Nai\r\n🎓 Đối tượng tham gia: Sinh viên ngành Công nghệ thông tin tại FPT Polytechnic Đồng Nai\r\n🧠 Nội dung thi (thực hành trên CSDL có sẵn):\r\n• Thiết kế giao diện người dùng (hình thức thí sinh tự chọn)\r\n• Thực hiện các chức năng cơ bản:\r\nThêm dữ liệu\r\nXóa dữ liệu\r\nChỉnh sửa dữ liệu\r\nTìm kiếm theo từ khóa\r\nSắp xếp theo tiêu chí lựa chọn\r\n🏆 Giải thưởng hấp dẫn:\r\n🥇 Giải Nhất: 1.000.000 VNĐ + Giấy chứng nhận\r\n🥈 Giải Nhì: 700.000 VNĐ + Giấy chứng nhận\r\n🥉 Giải Ba: 500.000 VNĐ + Giấy chứng nhận\r\n🎖️ 3 Giải khuyến khích: 100.000 VNĐ + Giấy chứng nhận\r\n🎁 Tất cả các đội tham gia đều nhận được điểm rèn luyện và phần quà từ nhà trường.\r\n📌 Hình thức đăng ký: https://forms.gle/LB9mnR2324gpggu7A\r\n(Đăng ký theo nhóm 2 sinh viên)\r\n🔥 Hãy nhanh tay đăng ký để thử sức, trau dồi kỹ năng và cùng nhau chạm tới tương lai công nghệ!\r\nFPT Polytechnic – Học nhanh, làm sớm!",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750229217190-85809154.jpg",
+      "createdAt": "2025-06-18T06:46:57.195Z"
+    },
+    {
+      "id": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "title": "[Recap cuộc thi Code đam mê - chạm tương lai\"",
+      "content": "#CodeDamMe2025 #FPTPolytechnic #CNTTĐồngNai #ChạmTươngLai #SinhVienCNTT #ThiLapTrinhThucTe",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750229416188-310277260.mp4",
+      "createdAt": "2025-06-18T06:50:16.512Z"
+    },
+    {
+      "id": "1ebec079-19f4-4187-af92-c377f1a4180a",
+      "userId": "58dc",
+      "title": "VÃI THẬT!!!! Bytedance ra mắt Seedance 1.0: Cuộc chơi Video AI chính thức bắt đầu!",
+      "content": "Bytedance đã chính thức tham gia đường đua VideoGen AI với Seedance 1.0 – mô hình video AI thế hệ mới có khả năng chuyển động siêu mượt, siêu nét, đầy tính nghệ thuật và đột phá.\r\n\r\nSeedance không chỉ đơn thuần là tạo video – mà là bước nhảy vọt vượt qua mọi giới hạn về chất lượng và khả năng sáng tạo. Một kỷ nguyên mới cho Video AI đã bắt đầu!\r\n\r\nAE tham khảo ngay nhé👇",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750236022384-691682170.mp4",
+      "createdAt": "2025-06-18T08:40:22.718Z"
+    },
+    {
+      "id": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "58dc",
+      "title": "TỔNG HỢP 10 KHÓA HỌC ỨNG DỤNG AI CHO NGƯỜI MỚI BẮT ĐẦU",
+      "content": "Mặc dù có khá nhiều bài viết, chia sẻ về AI nhưng theo mình là đa phần anh em trong nhóm (95%) vẫn còn chưa biết cách ứng dụng AI vào công việc cho người mới bắt đầu.\r\nDưới đây là tổng hợp 20 khóa học (miễn phí & trả phí) để anh em có thể tham gia, học được tại nhà và ứng dụng được AI ngay vào công việc. Cụ thể:\r\n1. LearnPrompting (https://learnprompting.org/):\r\nTrang này có 4 cấp độ: Beginner, Intermediate, Advanced và ứng dụng về Application. Nội dung tiếng anh, phù hợp mọi cấp độ & MIỄN PHÍ.\r\n2. GPTforWork (https://gptforwork.com/gpt-for-sheets/examples)\r\nHướng dẫn dùng ChatGPT để tạo công thức / hàm excel và vẽ đồ thị.\r\n3. AI Video Maker của @Hiếu AI. (https://hieuai.passio.eco/dp/course/115124):\r\nHướng dẫn chi tiết cách tự tạo 100+ video ngắn chuẩn viral của riêng bạn trong 1 ngày. Mình xin được code giảm 10% cho anh em là NGHIENAI10.\r\n4. PromptEngineering cho ChatGPT (https://www.coursera.org/learn/prompt-engineering) của đại học Vanderbilt.\r\nHướng dẫn tạo prompt, điều chỉnh cho phù hợp với từng công việc (Creators, Social Media, Business...).\r\n5. MidJourney 101 của Printify (https://printify.com/blog/midjourney-prompts/)\r\nHướng dẫn tạo Prompt Midjourney để in ảnh lên Áo thun / Cốc, với ví dụ.\r\n6. MidJourney Prompt MasterClass for AI Art (https://www.udemy.com/course/midjourney-prompt/)\r\nHọc cấu trúc của việc viết Prompt, phát triển kỹ năng tư duy tạo Prompt, cách thêm bớt cho phù hợp và điều chỉnh prompt.\r\n7. GPT01 - Tuyệt đỉnh ứng dụng ChatGPT (https://bit.ly/3rh1M6c)\r\nKhóa học này nói về nội dung cơ bản, nắm nền tảng, tuy nhiên theo mình mọi người nên đăng ký thành viên 199k/tháng để học tất cả các khóa (GPT + word + excel + ...) để tiết kiệm chi phí.\r\n8. You Probably Need A Robot (https://youprobablyneedarobot.com/)\r\nKhóa này dành cho các bạn muốn tiết kiệm 8 - 10 giờ/tuần qua các công cụ AI. Giá không hề rẻ ($199), nhưng cộng đồng chất lượng + có nhiều insight hay.\r\n9. ChatGPT Student's Pack (https://juliandigitaledge.gumroad.com/)\r\nTổng hợp 350 prompts ChatGPT cho Học sinh sinh viên, hàng miễn phí cho anh em dùng.\r\n10. Introduction to Generative AI (https://www.cloudskillsboost.google/course_templates/536)\r\nKhóa này của google, giới thiệu về Generative AI (MidJourney, SD,...) và dùng những công cụ của Google để tạo 1 app AI của riêng bạn.\r\nNgoài ra trên Group thì anh em có thể theo dõi các bài viết của các thành viên cứng như Tony Duc AI Bửu Trung Hồ Thương Tín để học cách ứng dụng AI vào công việc.\r\nThời gian tới thì mình và team sẽ tổng hợp các prompt ChatGPT & MidJourney cho các ngành nghề, anh em có đề xuất nghề nào thì để lại bình luận nhé.",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750236986686-385583487.jpg",
+      "createdAt": "2025-06-18T08:56:26.689Z"
+}
+     
     }
   ]
 }
