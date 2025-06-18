@@ -42,7 +42,7 @@
             <i class="bi bi-chat-fill fs-5"></i>
         </BButton>
         <p class="mb-0 text-muted fs-5">Thời gian đăng</p>
-    </div>h
+    </div>
 
 
     
