@@ -386,7 +386,7 @@ server.post('/api/posts', upload.single('imageOrVideo'), async (req, res) => {
 
         // Ghi lại dữ liệu vào db.json
         fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
-
+        router.db.read();
         // Trả về bài viết mới đã tạo
         res.status(201).json(newPost);
 
@@ -431,6 +431,50 @@ server.get('/api/posts/recent', (req, res) => {
         res.status(500).json({ message: 'Lỗi server khi lấy bài viết.' });
     }
 });
+// --- API XÓA BÀI VIẾT (AN TOÀN) ---
+// ===================================================================
+server.delete('/api/posts/:postId', (req, res) => {
+    try {
+        const { postId } = req.params;
+        // Lấy userId từ body của request để xác thực quyền sở hữu
+        const { userId } = req.body;
+
+        // 1. Kiểm tra thông tin đầu vào
+        if (!userId) {
+            return res.status(400).json({ message: 'Yêu cầu xóa không hợp lệ, thiếu thông tin người dùng.' });
+        }
+        
+        const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+        const postIndex = db.posts.findIndex(p => p.id === postId);
+
+        // 2. Kiểm tra bài viết có tồn tại không
+        if (postIndex === -1) {
+            return res.status(404).json({ message: 'Không tìm thấy bài viết để xóa.' });
+        }
+
+        const postToDelete = db.posts[postIndex];
+
+        // 3. KIỂM TRA QUYỀN SỞ HỮU (QUAN TRỌNG NHẤT)
+        // So sánh userId của bài viết với userId của người gửi yêu cầu
+        if (postToDelete.userId !== userId) {
+            return res.status(403).json({ message: 'Bạn không có quyền xóa bài viết này.' });
+        }
+
+        // 4. Nếu mọi thứ hợp lệ, tiến hành xóa
+        db.posts.splice(postIndex, 1); // Xóa bài viết khỏi mảng
+        fs.writeFileSync(dbPath, JSON.stringify(db, null, 2)); // Ghi lại file db.json
+        
+        // Báo cho router của json-server biết là db đã thay đổi
+        router.db.read(); 
+
+        res.status(200).json({ message: 'Bài viết đã được xóa thành công.' });
+
+    } catch (error) {
+        console.error('Lỗi khi xóa bài viết:', error);
+        res.status(500).json({ message: 'Lỗi server khi xóa bài viết.' });
+    }
+});
+
 // ===================================================================
 // --- SỬ DỤNG JSON SERVER (PHẢI ĐẶT Ở CUỐI CÙNG) ---
 // ===================================================================

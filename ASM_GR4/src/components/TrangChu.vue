@@ -77,27 +77,24 @@
               {{ expandedPosts[post.id] ? 'Ẩn bớt' : 'Xem thêm...' }}
             </button>
             
-            <div v-if="post.imageOrVideoUrl" class="mt-3 text-center">
+            <div v-if="post.imageOrVideoUrl" class="mt-3 text-center bg-light">
               <!-- === SỬA LỖI TẠI ĐÂY === -->
               <video v-if="isVideoUrl(post.imageOrVideoUrl)" :src="getFullUrl(post.imageOrVideoUrl)" controls class="img-fluid rounded" style="max-height: 500px;"></video>
               <img v-else :src="getFullUrl(post.imageOrVideoUrl)" alt="Nội dung bài viết" class="img-fluid rounded" style="max-height: 500px;">
             </div>
 
-            <div class="d-flex justify-content-between align-items-center gap-3 p-2 pe-3 pt-3 pb-3 border-top mt-1">
-              <div class="d-flex align-items-center gap-2">
-                  <BAvatar variant="secondary" />
-                  <p class="mb-0 text-muted fs-5">Tên tác giả</p>
-              </div>
-
-              <div class="d-flex align-items-center gap-3">
-                  <BButton variant="link" class="text-secondary">
-                      <i class="bi bi-hand-thumbs-up-fill fs-5"></i>
+               <div class=" pt-2 border-top mt-1 mb-2">
+              <div class="d-flex justify-content-evenly align-items-center ">
+                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4">
+                      <i class="bi bi-hand-thumbs-up-fill "></i> (Số lượng)
                   </BButton>
-                  <BButton variant="link" class="text-secondary">
-                      <i class="bi bi-chat-fill fs-5"></i>
-                  </BButton>
-                  <p class="mb-0 text-muted fs-5">Thời gian đăng</p>
-              </div>   
+                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4"> 
+                      <i class="bi bi-hand-thumbs-down-fill"></i> (số lượng)
+                  </BButton> 
+                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4" >
+                      <i class="bi bi-chat-fill "></i> Bình luận
+                  </BButton> 
+            </div>
             </div>
           </div>
         </div>
@@ -193,27 +190,38 @@ const recentPostsError = ref<string | null>(null);
 
 // Biến để lưu interval ID cho việc polling
 let pollingInterval: number | undefined;
-
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    // Khi người dùng quay lại tab này, fetch lại dữ liệu
+    console.log("Tab is visible again, fetching new posts...");
+    silentFetchUserPosts();
+    silentFetchRecentPosts();
+  }
+}
 // --- Vòng đời Component ---
 onMounted(() => {
   // Tải dữ liệu lần đầu tiên
   fetchUserPosts();
   fetchRecentPosts();
-
+document.addEventListener('visibilitychange', handleVisibilityChange);
   // Bắt đầu polling để tự động cập nhật cả 2 danh sách
   pollingInterval = window.setInterval(() => {
     console.log('Kiểm tra bài viết mới...');
     // Cập nhật cả 2 danh sách trong nền
     silentFetchUserPosts();
     silentFetchRecentPosts();
-  }, 10000); // Kiểm tra mỗi 10 giây
+  }, 5000); // Kiểm tra mỗi 10 giây
 });
+
 
 onUnmounted(() => {
   // Dọn dẹp interval khi component bị hủy
   if (pollingInterval) {
     clearInterval(pollingInterval);
   }
+  
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+
 });
 
 // --- Các hàm tiện ích (Giữ nguyên) ---

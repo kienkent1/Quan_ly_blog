@@ -25,7 +25,7 @@
         <p class="mt-2 text-muted">Đang tải danh sách người dùng...</p>
       </div>
 
-      <!-- SỬA: BẢNG DỮ LIỆU VÀ KHỐI NÚT HÀNH ĐỘNG ĐƯỢC GỘP CHUNG TRONG v-else -->
+      <!-- BẢNG DỮ LIỆU VÀ KHỐI NÚT HÀNH ĐỘNG -->
       <div v-else>
         <!-- 1. BẢNG DỮ LIỆU -->
         <BTable
@@ -44,9 +44,8 @@
           </template>
         </BTable>
       
-        <!-- 2. KHỐI NÚT HÀNH ĐỘNG (ĐÃ ĐƯỢC CHUYỂN VÀO ĐÂY) -->
+        <!-- 2. KHỐI NÚT HÀNH ĐỘNG (KHÔNG CẦN SỬA) -->
         <div class="mt-3 pt-3 border-top">
-          <!-- HIỂN THỊ KHI ĐÃ CHỌN MỘT USER -->
           <div v-if="selectedUser" class="d-md-flex justify-content-between align-items-center">
             <!-- Thông tin user đã chọn -->
             <div class="mb-3 mb-md-0">
@@ -55,48 +54,50 @@
             </div>
             
             <!-- Các nút chức năng -->
-           <!-- Các nút chức năng -->
-<!-- Các nút chức năng (ĐÃ NÂNG CẤP) -->
-<div class="d-flex justify-content-end gap-2">
-    <!-- Nút Cấp/Bỏ quyền Admin -->
-    <BButton
-      :variant="selectedUser.role === 'admin' ? 'secondary' : 'success'"
-      @click="toggleAdminRole"
-      :disabled="isActionLoading || isSuperAdmin"
-    >
-      <i :class="selectedUser.role === 'admin' ? 'bi bi-person-fill-down' : 'bi bi-person-fill-up'"></i>
-      {{ selectedUser.role === 'admin' ? 'Bỏ quyền Admin' : 'Cấp quyền Admin' }}
-    </BButton>
+            <div class="d-flex justify-content-end gap-2">
+              <!-- Nút Cấp/Bỏ quyền Admin -->
+              <BButton
+                id="toggle-admin-button"
+                :variant="selectedUser.role === 'admin' ? 'secondary' : 'success'"
+                @click="toggleAdminRole"
+                :disabled="!canCurrentUserToggleAdmin"
+              >
+                <i :class="selectedUser.role === 'admin' ? 'bi bi-person-fill-down' : 'bi bi-person-fill-up'"></i>
+                {{ selectedUser.role === 'admin' ? 'Bỏ quyền Admin' : 'Cấp quyền Admin' }}
+              </BButton>
+              <BTooltip 
+                target="toggle-admin-button" 
+                v-if="!canCurrentUserToggleAdmin"
+              >
+                {{ isSuperAdminSelected ? 'Không thể thay đổi quyền của Super Admin.' : 'Chỉ Super Admin mới có quyền thực hiện hành động này.' }}
+              </BTooltip>
 
-    <!-- Nút Khóa/Mở khóa -->
-    <BButton
-      :variant="isSelectedUserLocked ? 'info' : 'warning'"
-      @click="toggleUserLock"
-      :disabled="isActionLoading"
-    >
-      <i :class="isSelectedUserLocked ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-      {{ isSelectedUserLocked ? 'Mở khóa' : 'Khóa' }}
-    </BButton>
+              <!-- Nút Khóa/Mở khóa -->
+              <BButton
+                :variant="isSelectedUserLocked ? 'info' : 'warning'"
+                @click="toggleUserLock"
+                :disabled="isActionLoading || isSuperAdminSelected"
+              >
+                <i :class="isSelectedUserLocked ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                {{ isSelectedUserLocked ? 'Mở khóa' : 'Khóa' }}
+              </BButton>
 
-    <!-- Nút Xóa (ĐÃ NÂNG CẤP) -->
-    <!-- Nút Xóa (Sửa lại) -->
-<BButton
-  id="delete-button" 
-  variant="danger"
-  @click="deleteUser"
-  :disabled="isActionLoading || selectedUser.role === 'admin'"
->
-  <i class="bi bi-trash-fill"></i> Xóa
-</BButton>
-
-<!-- THÊM COMPONENT TOOLTIP -->
-<BTooltip 
-  target="delete-button" 
-  v-if="selectedUser && selectedUser.role === 'admin'"
->
-  Không thể xóa tài khoản Admin
-</BTooltip>
-</div>
+              <!-- Nút Xóa -->
+              <BButton
+                id="delete-button" 
+                variant="danger"
+                @click="deleteUser"
+                :disabled="isActionLoading || selectedUser.role === 'admin'"
+              >
+                <i class="bi bi-trash-fill"></i> Xóa
+              </BButton>
+              <BTooltip 
+                target="delete-button" 
+                v-if="selectedUser && selectedUser.role === 'admin'"
+              >
+                Không thể xóa tài khoản Admin
+              </BTooltip>
+            </div>
           </div>
 
           <!-- HIỂN THỊ KHI CHƯA CHỌN USER NÀO -->
@@ -111,11 +112,20 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-// Bỏ qua import useAuth vì không dùng trong file này
 import { BTable, BButton, BAvatar, BTooltip } from 'bootstrap-vue-next';
-import type { User } from '../../types';
+// SỬA ĐỔI: Import useAuth từ file bạn đã cung cấp
+import { useAuth } from '../../composables/useAuth';
 
-// --- STATE MANAGEMENT ---
+export interface User {
+    id: string;
+    email: string;
+    displayName?: string;
+    avatarUrl?: string | null;
+    role: 'admin' | 'user';
+    status?: 'active' | 'locked';
+}
+
+// --- STATE MANAGEMENT (KHÔNG ĐỔI) ---
 const users = ref<User[]>([]);
 const selectedUser = ref<User | null>(null);
 const isLoading = ref(false);
@@ -128,16 +138,44 @@ const tableFields = [
   { key: 'role', label: 'Quyền', sortable: true, class: 'text-capitalize' },
   { key: 'status', label: 'Trạng thái', sortable: true, class: 'text-capitalize' },
 ];
-
-// ...
 const isSelectedUserLocked = computed(() => selectedUser.value?.status === 'locked');
 
-// === THÊM MỚI: BIẾN KIỂM TRA SUPER ADMIN ===
-const SUPER_ADMIN_ID = 'ffff6c11-1c30-4fa7-85cd-0b7113c2c7f8';
-const isSuperAdmin = computed(() => selectedUser.value?.id === SUPER_ADMIN_ID);
-// ===========================================
+// === SỬA ĐỔI: PHẦN QUẢN LÝ QUYỀN VÀ NGƯỜI DÙNG ===
+const SUPER_ADMIN_ID = '58dc';
 
-// --- HÀM NÀY SẼ LẤY TẤT CẢ USER ---
+// 1. Lấy thông tin người dùng đang đăng nhập từ useAuth của bạn
+//    Sử dụng alias `user: currentUser` để đổi tên biến cho rõ ràng và tránh trùng lặp
+const { user: currentUser } = useAuth();
+
+// 2. Computed property kiểm tra xem người dùng ĐANG ĐĂNG NHẬP có phải là Super Admin không
+const isCurrentUserSuperAdmin = computed(() => {
+  // Thêm ?. để phòng trường hợp currentUser.value là null (chưa đăng nhập)
+  return currentUser.value?.id === SUPER_ADMIN_ID;
+});
+
+// 3. Computed property kiểm tra xem người dùng ĐƯỢC CHỌN TRONG BẢNG có phải là Super Admin không
+const isSuperAdminSelected = computed(() => selectedUser.value?.id === SUPER_ADMIN_ID);
+
+// 4. Computed property tổng hợp tất cả các điều kiện để bật/tắt nút "Cấp quyền Admin"
+//    Logic này không thay đổi, nhưng giờ nó hoạt động với dữ liệu người dùng thật.
+const canCurrentUserToggleAdmin = computed(() => {
+  // Điều kiện 1: Chỉ Super Admin đang đăng nhập mới có quyền
+  if (!isCurrentUserSuperAdmin.value) {
+    return false;
+  }
+  // Điều kiện 2: Không thể thay đổi quyền của chính Super Admin (người được chọn trong bảng)
+  if (isSuperAdminSelected.value) {
+    return false;
+  }
+  // Điều kiện 3: Không có hành động nào khác đang chạy
+  if (isActionLoading.value) {
+    return false;
+  }
+  return true;
+});
+// ========================================================
+
+// --- CÁC HÀM XỬ LÝ DỮ LIỆU VÀ SỰ KIỆN (KHÔNG ĐỔI) ---
 const fetchUsers = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
@@ -156,36 +194,11 @@ const fetchUsers = async () => {
   }
 };
 
-// const onRowSelected = (items: User[]) => {
-//    console.log('Sự kiện @row-selected đã được kích hoạt!', items); 
-//   if (items && items.length > 0) {
-//     selectedUser.value = items[0];
-//      console.log('Biến selectedUser đã được cập nhật:', selectedUser.value);
-//   } else {
-//     selectedUser.value = null;
-//     console.log('Đã bỏ chọn hàng, selectedUser được set về null.');
-//   }
-// };
-// BỎ HÀM onRowSelected CŨ. THAY BẰNG 2 HÀM MỚI DƯỚI ĐÂY:
-
-// Hàm xử lý sự kiện khi một hàng được click
 const onRowClicked = (item: User) => {
-  // Nếu click vào hàng đang được chọn, thì bỏ chọn nó (set về null)
   if (selectedUser.value && selectedUser.value.id === item.id) {
     selectedUser.value = null;
-  } 
-  // Nếu click vào một hàng khác, thì chọn hàng đó
-  else {
+  } else {
     selectedUser.value = item;
-  }
-};
-
-// Hàm này thêm một class CSS để làm nổi bật hàng được chọn
-const rowClass = (item: User | null, type: string) => {
-  if (!item || type !== 'row') return;
-  if (selectedUser.value && item.id === selectedUser.value.id) {
-    // 'table-active' là một class của Bootstrap để làm xám nền
-    return 'table-active'; 
   }
 };
 
@@ -199,8 +212,9 @@ onMounted(() => {
   fetchUsers();
 });
 
-// --- CÁC HÀM HÀNH ĐỘNG ---
+// --- CÁC HÀM HÀNH ĐỘNG (LOGIC BÊN TRONG GIỮ NGUYÊN) ---
 const updateUserField = async (userId: string, data: object) => {
+  // ... (Không đổi)
   if (isActionLoading.value) return;
   isActionLoading.value = true;
   try {
@@ -212,7 +226,7 @@ const updateUserField = async (userId: string, data: object) => {
     if (!response.ok) {
         throw new Error('Cập nhật thất bại');
     }
-    await fetchUsers(); // Tải lại danh sách để cập nhật UI
+    await fetchUsers();
   } catch (error) {
     console.error('Lỗi khi cập nhật người dùng:', error);
     alert('Có lỗi xảy ra, vui lòng thử lại.');
@@ -222,7 +236,8 @@ const updateUserField = async (userId: string, data: object) => {
 };
 
 const toggleAdminRole = async () => {
-  if (!selectedUser.value || isSuperAdmin.value) return;
+  // Logic kiểm tra quyền đã được chuyển vào `canCurrentUserToggleAdmin`
+  if (!canCurrentUserToggleAdmin.value || !selectedUser.value) return;
 
   const newRole = selectedUser.value.role === 'admin' ? 'user' : 'admin';
   const actionText = newRole === 'user' ? 'bỏ quyền admin' : 'cấp quyền admin';
@@ -233,20 +248,20 @@ const toggleAdminRole = async () => {
 };
 
 const toggleUserLock = async () => {
-  if (!selectedUser.value) return;
+  // Thêm điều kiện kiểm tra isSuperAdminSelected để không khóa/mở khóa super admin
+  if (!selectedUser.value || isSuperAdminSelected.value) return;
   const newStatus = isSelectedUserLocked.value ? 'active' : 'locked';
   await updateUserField(selectedUser.value.id, { status: newStatus });
 };
 
 const deleteUser = async () => {
+  // ... (Không đổi)
   if (!selectedUser.value) return;
   
-  // === THÊM MỚI: LỚP BẢO VỆ THỨ HAI ===
   if (selectedUser.value.role === 'admin') {
     alert('Không thể xóa tài khoản có quyền Admin.');
     return;
   }
-  // ===================================
   
   if (!confirm(`Bạn có chắc chắn muốn xóa người dùng "${selectedUser.value.email}" không? Hành động này không thể hoàn tác.`)) return;
   
@@ -257,7 +272,7 @@ const deleteUser = async () => {
     if (!response.ok) {
         throw new Error('Xóa thất bại');
     }
-    await fetchUsers(); // Tải lại danh sách
+    await fetchUsers();
   } catch (error) {
     console.error('Lỗi khi xóa người dùng:', error);
     alert('Có lỗi xảy ra, vui lòng thử lại.');
@@ -265,15 +280,13 @@ const deleteUser = async () => {
     isActionLoading.value = false;
   }
 };
-
 </script>
-<style scoped>
-.button-group {
-  display: flex;
-  gap: 8px;
-}
 
-.btn {
-  min-width: 120px;
+<style scoped>
+.btn:disabled {
+  cursor: not-allowed;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>
