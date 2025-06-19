@@ -21,14 +21,14 @@ import TheNavbar from './components/TheNavbar.vue'
   <footer class=" text-body-secondary bg-body-tertiary col-xl-12 mt-5 "> 
     <div class="d-flex justify-center d-grid gap-3 p-5 ">
     <div class="col-md-7 ">
-    <h3>Về BlogShare</h3>   
-    <p>BlogShare là nơi mọi người có thể tự do chia sẻ những câu chuyện, trải nghiệm và cảm xúc thông qua các bài blog cá nhân. Dự án được xây dựng với mong muốn tạo ra một không gian kết nối, lắng nghe và lan tỏa cảm hứng sống tích cực.</p>
+    <h3>Về DauBlog</h3>   
+    <p>DauBloglà nơi mọi người có thể tự do chia sẻ những câu chuyện, trải nghiệm và cảm xúc thông qua các bài blog cá nhân. Dự án được xây dựng với mong muốn tạo ra một không gian kết nối, lắng nghe và lan tỏa cảm hứng sống tích cực.</p>
     <h4>Thông tin liên hệ</h4>
     <ul >
       <li>Email: DauBlog@gmail.com</li>
       <li>Hotline: 0325861787</li>
       <li>Địa chỉ: Làng thông bình nguyên vô vọng</li>
-      <img src="../src/assets/images/FPT_Polytechnic.png" width="200px" height="80px"alt="" class="mt-3">
+    
     </ul>
   </div>
   

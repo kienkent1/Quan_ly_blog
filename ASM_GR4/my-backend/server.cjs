@@ -21,7 +21,7 @@ console.log('>>> Server đang khởi động. Giá trị EMAIL_USER là:', proce
 // ==========================================================
 
 
-const server = express();
+
 
 // --- Định nghĩa các đường dẫn quan trọng ---
 const rootDir = path.join(__dirname, '..');
@@ -32,15 +32,17 @@ if (!fs.existsSync(dbPath)) {
     console.error(`FATAL ERROR: db.json not found at ${dbPath}. Please make sure it's in the 'my-backend' directory.`);
     process.exit(1);
 }
+const server = express();
 const router = jsonServer.router(dbPath);
-const middlewares = jsonServer.defaults();
+const middlewares = jsonServer.defaults(); // Lấy các middleware mặc định
 const PORT = 3000;
 
 // --- CÁC MIDDLEWARE CƠ BẢN ---
 // Phải được đặt trước các route
 // server.options('*', cors()); 
-server.use(cors());
+server.use(middlewares); 
 server.use(express.json());
+server.use(cors());
 server.use(express.static(publicPath)); // Phục vụ ảnh từ thư mục public ở gốc
 
 
@@ -212,6 +214,25 @@ server.post('/api/auth/google', (req, res) => {
 });
 
 // API 5: Đăng nhập bằng Email/Mật khẩu
+// server.post('/api/login', (req, res) => {
+//   const { email, password } = req.body;
+//   if (!email || !password) {
+//     return res.status(400).json({ message: 'Vui lòng cung cấp email và mật khẩu.' });
+//   }
+//   const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+//   const user = db.users.find(u => u.email === email);
+//   if (!user) {
+//     return res.status(401).json({ message: 'Email hoặc mật khẩu không chính xác.' });
+//   }
+//   if (user.loginMethod === 'google') {
+//     return res.status(403).json({ message: 'Tài khoản này được đăng ký bằng Google. Vui lòng sử dụng nút đăng nhập với Google.' });
+//   }
+//   if (user.password !== password) {
+//     return res.status(401).json({ message: 'Email hoặc mật khẩu không chính xác.' });
+//   }
+//   const { password: _, ...userToReturn } = user;
+//   res.json(userToReturn);
+// });
 server.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -219,15 +240,28 @@ server.post('/api/login', (req, res) => {
   }
   const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
   const user = db.users.find(u => u.email === email);
+
+  // Kiểm tra user có tồn tại không
   if (!user) {
     return res.status(401).json({ message: 'Email hoặc mật khẩu không chính xác.' });
   }
+  
+  // KIỂM TRA TRẠNG THÁI TÀI KHOẢN (RẤT QUAN TRỌNG)
+  if (user.status === 'locked') {
+    return res.status(403).json({ message: 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.' });
+  }
+
+  // Kiểm tra phương thức đăng nhập
   if (user.loginMethod === 'google') {
     return res.status(403).json({ message: 'Tài khoản này được đăng ký bằng Google. Vui lòng sử dụng nút đăng nhập với Google.' });
   }
+  
+  // Kiểm tra mật khẩu
   if (user.password !== password) {
     return res.status(401).json({ message: 'Email hoặc mật khẩu không chính xác.' });
   }
+  
+  // Nếu mọi thứ đều ổn, trả về thông tin người dùng (không kèm mật khẩu)
   const { password: _, ...userToReturn } = user;
   res.json(userToReturn);
 });
@@ -566,7 +600,6 @@ server.delete('/api/posts/:postId', (req, res) => {
 // --- SỬ DỤNG JSON SERVER (PHẢI ĐẶT Ở CUỐI CÙNG) ---
 // ===================================================================
 
-server.use(middlewares);
 server.use(router);
 
 // --- Khởi động server ---

@@ -3,7 +3,7 @@
     <BNavbar
       v-b-color-mode="'light'"
       variant="white" 
-      class="col-md-11"
+      class="col-md-11 fs-5 lh-lg"
     >
       <BNavbarNav class="w-100 border-bottom align-items-center p-1">
         <img src="../assets/images/logo.png" height="40px" width="50px" alt="">
@@ -35,14 +35,19 @@
             <!-- === DÒNG ĐÃ ĐƯỢC THAY ĐỔI === -->
              <div class="me-3 ">
              <BNavItem  >
-            <BButton  variant="link" class="text-secondary position-relative">
-            <i class="bi bi-bell-fill fs-5"></i>
-            <BBadge
-    variant="danger"
-    class="position-absolute top-0 start-100 translate-middle"
-    >99+</BBadge
-  >
-        </BButton>
+              <BButton
+                  v-b-popover.left="{ title: 'Thông báo', body: 'Bạn có 11 thông báo chưa đọc.', container: 'body' }"
+                  variant="link"
+                  class="text-secondary position-relative"
+                >
+                  <i class="bi bi-bell-fill fs-5"></i>
+                  <BBadge
+                    variant="danger"
+                    class="position-absolute top-0 start-100 translate-middle"
+                  >
+                    11
+                  </BBadge>
+                </BButton>
             </BNavItem>
           </div>
             <div class="d-flex justify-contetn-end">
@@ -77,7 +82,8 @@ import {
   BButton,
   BBadge,
 } from 'bootstrap-vue-next';
-import { vBColorMode } from 'bootstrap-vue-next';
+import { vBColorMode, vBPopover } from 'bootstrap-vue-next';
+
 import { useAuth } from '../composables/useAuth.js';
 
 const { isLoggedIn, isAdmin, user, logout } = useAuth();
