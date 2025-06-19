@@ -397,6 +397,171 @@ server.get('/api/posts/recent', (req, res) => {
         res.status(500).json({ message: 'Lỗi server khi lấy bài viết.' });
     }
 });
+
+// API 7: LẤY BÀI VIẾT THEO USER ID
+server.get('/api/posts/user/:userId', (req, res) => {
+    try {
+        const { userId } = req.params;
+        const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+        const posts = db.posts || [];
+        const users = db.users || [];
+
+        // Lọc bài viết theo userId và sắp xếp theo thời gian mới nhất
+        const userPosts = posts
+            .filter(post => post.userId === userId)
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        // Gộp thông tin tác giả vào mỗi bài viết
+        const postsWithAuthors = userPosts.map(post => {
+            const author = users.find(user => user.id === post.userId);
+            const authorInfo = author 
+                ? { displayName: author.displayName, avatarUrl: author.avatarUrl }
+                : { displayName: 'Người dùng không tồn tại', avatarUrl: null };
+
+            return {
+                ...post,
+                author: authorInfo,
+                likes: post.likes || 0,
+                loves: post.loves || 0,
+                likedBy: post.likedBy || [],
+                lovedBy: post.lovedBy || []
+            };
+        });
+
+        res.status(200).json(postsWithAuthors);
+    } catch (error) {
+        console.error('Lỗi khi lấy bài viết của người dùng:', error);
+        res.status(500).json({ message: 'Lỗi server khi lấy bài viết.' });
+    }
+});
+
+// API 8: LIKE BÀI VIẾT
+server.post('/api/posts/:postId/like', (req, res) => {
+    try {
+        const { postId } = req.params;
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: 'Vui lòng cung cấp userId.' });
+        }
+
+        const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+        const postIndex = db.posts.findIndex(p => p.id === postId);
+
+        if (postIndex === -1) {
+            return res.status(404).json({ message: 'Không tìm thấy bài viết.' });
+        }
+
+        const post = db.posts[postIndex];
+        const likedBy = post.likedBy || [];
+
+        // Kiểm tra xem người dùng đã like chưa
+        if (likedBy.includes(userId)) {
+            return res.status(400).json({ message: 'Bạn đã like bài viết này rồi.' });
+        }
+
+        // Thêm userId vào danh sách likedBy và tăng số lượng likes
+        likedBy.push(userId);
+        post.likedBy = likedBy;
+        post.likes = (post.likes || 0) + 1;
+        post.updatedAt = new Date().toISOString();
+
+        // Cập nhật db.json
+        fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+
+        res.status(200).json(post);
+    } catch (error) {
+        console.error('Lỗi khi like bài viết:', error);
+        res.status(500).json({ message: 'Lỗi server khi like bài viết.' });
+    }
+});
+
+// API 9: LOVE BÀI VIẾT
+server.post('/api/posts/:postId/love', (req, res) => {
+    try {
+        const { postId } = req.params;
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: 'Vui lòng cung cấp userId.' });
+        }
+
+        const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+        const postIndex = db.posts.findIndex(p => p.id === postId);
+
+        if (postIndex === -1) {
+            return res.status(404).json({ message: 'Không tìm thấy bài viết.' });
+        }
+
+        const post = db.posts[postIndex];
+        const lovedBy = post.lovedBy || [];
+
+        // Kiểm tra xem người dùng đã love chưa
+        if (lovedBy.includes(userId)) {
+            return res.status(400).json({ message: 'Bạn đã thả tim bài viết này rồi.' });
+        }
+
+        // Thêm userId vào danh sách lovedBy và tăng số lượng loves
+        lovedBy.push(userId);
+        post.lovedBy = lovedBy;
+        post.loves = (post.loves || 0) + 1;
+        post.updatedAt = new Date().toISOString();
+
+        // Cập nhật db.json
+        fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+
+        res.status(200).json(post);
+    } catch (error) {
+        console.error('Lỗi khi love bài viết:', error);
+        res.status(500).json({ message: 'Lỗi server khi love bài viết.' });
+    }
+});
+
+// API 10: XÓA BÀI VIẾT
+server.delete('/api/posts/:postId', (req, res) => {
+    try {
+        const { postId } = req.params;
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: 'Vui lòng cung cấp userId.' });
+        }
+
+        const db = JSON.parse(fs.readFileSync(dbPath, 'UTF-8'));
+        const postIndex = db.posts.findIndex(p => p.id === postId);
+
+        if (postIndex === -1) {
+            return res.status(404).json({ message: 'Không tìm thấy bài viết.' });
+        }
+
+        const post = db.posts[postIndex];
+
+        // Kiểm tra quyền xóa
+        if (post.userId !== userId) {
+            return res.status(403).json({ message: 'Bạn không có quyền xóa bài viết này.' });
+        }
+
+        // Xóa file ảnh/video nếu có
+        if (post.imageOrVideoUrl) {
+            const filePath = path.join(publicPath, post.imageOrVideoUrl);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        }
+
+        // Xóa bài viết khỏi mảng posts
+        db.posts.splice(postIndex, 1);
+
+        // Cập nhật db.json
+        fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+
+        res.status(200).json({ message: 'Xóa bài viết thành công.' });
+    } catch (error) {
+        console.error('Lỗi khi xóa bài viết:', error);
+        res.status(500).json({ message: 'Lỗi server khi xóa bài viết.' });
+    }
+});
+
 // ===================================================================
 // --- SỬ DỤNG JSON SERVER (PHẢI ĐẶT Ở CUỐI CÙNG) ---
 // ===================================================================

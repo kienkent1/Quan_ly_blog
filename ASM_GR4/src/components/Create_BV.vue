@@ -56,50 +56,52 @@
           </div>
           
           <!-- Danh sách bài viết -->
-          <ul v-else class="list-unstyled">
-             <li v-if="recentPosts.length === 0" class="text-muted border-top pt-3">
-               Chưa có bài viết nào.
-             </li>
-            <li v-for="post in recentPosts" :key="post.id">
-              <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
-                
-                <!-- START: THAY ĐỔI LOGIC HIỂN THỊ MEDIA -->
-                
-                <!-- 1. Hiển thị video nếu là file video -->
-                <video
-                  v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)"
-                  :src="`http://localhost:3000${post.imageOrVideoUrl}`"
-                  class="bd-placeholder-img"
-                  width="100"
-                  height="96"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  alt="Post video preview"
-                ></video>
+          <div v-else>
+            <ul class="list-unstyled" style="max-height: 350px; overflow-y: auto;">
+              <li v-if="recentPosts.length === 0" class="text-muted border-top pt-3">
+                Chưa có bài viết nào.
+              </li>
+              <li v-for="post in recentPosts" :key="post.id">
+                <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
+                  
+                  <!-- START: THAY ĐỔI LOGIC HIỂN THỊ MEDIA -->
+                  
+                  <!-- 1. Hiển thị video nếu là file video -->
+                  <video
+                    v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)"
+                    :src="`http://localhost:3000${post.imageOrVideoUrl}`"
+                    class="bd-placeholder-img"
+                    width="100"
+                    height="96"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    alt="Post video preview"
+                  ></video>
 
-                <!-- 2. Hiển thị ảnh nếu là file ảnh -->
-                <img
-                  v-else-if="post.imageOrVideoUrl"
-                  :src="`http://localhost:3000${post.imageOrVideoUrl}`"
-                  class="bd-placeholder-img"
-                  width="100"
-                  height="96"
-                  alt="Post image"
-                />
+                  <!-- 2. Hiển thị ảnh nếu là file ảnh -->
+                  <img
+                    v-else-if="post.imageOrVideoUrl"
+                    :src="`http://localhost:3000${post.imageOrVideoUrl}`"
+                    class="bd-placeholder-img"
+                    width="100"
+                    height="96"
+                    alt="Post image"
+                  />
 
-                <!-- 3. Nếu không có cả hai, không hiển thị gì cả (không có v-else) -->
+                  <!-- 3. Nếu không có cả hai, không hiển thị gì cả (không có v-else) -->
 
-                <!-- END: THAY ĐỔI LOGIC HIỂN THỊ MEDIA -->
+                  <!-- END: THAY ĐỔI LOGIC HIỂN THỊ MEDIA -->
 
-                <div class="col-lg-8">
-                  <h6 class="mb-0">{{ truncateText(post.title || "Bài viết không có tiêu đề", 50) }}</h6>
-                  <small class="text-body-secondary">{{ formatDateTime(post.createdAt) }}</small>
+                  <div class="col-lg-8">
+                    <h6 class="mb-0">{{ truncateText(post.title || "Bài viết không có tiêu đề", 50) }}</h6>
+                    <small class="text-body-secondary">{{ formatDateTime(post.createdAt) }}</small>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -115,6 +117,7 @@ import {
   BFormTextarea,
   BFormInput,
 } from 'bootstrap-vue-next';
+import { eventBus } from '../eventBus';
 
 // --- STATE CHO FORM TẠO BÀI VIẾT ---
 const file = ref<File | null>(null);
@@ -217,6 +220,7 @@ async function dangBai() {
 
       // Cập nhật lại danh sách bài viết gần đây
       await fetchRecentPosts();
+      eventBus.emit('post-created');
       
     } else {
       const errorData = await response.json();
