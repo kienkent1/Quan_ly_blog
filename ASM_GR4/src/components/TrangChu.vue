@@ -37,13 +37,10 @@
         </div>
       </div>
     </div>
-    <!-- ========================================================== -->
+    
     <!-- PHẦN BÀI ĐĂNG CẬP NHẬT -->
-    <!-- ========================================================== -->
     <div class="mt-5 border-top pt-5 col-md-11 ">
-      <h3 class="text-center mb-4">
-        Bài đăng nổi bật
-      </h3>
+      <h3 class="text-center mb-4">Bài đăng nổi bật</h3>
 
       <div v-if="loading" class="text-center mt-5">
         <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
@@ -52,179 +49,212 @@
 
       <div v-else-if="error" class="alert alert-danger">{{ error }}</div>
 
-      <div v-else-if="userPosts.length > 0" class="d-flex justify-content-between gap-3">
+      <div v-else-if="processedPosts.length > 0" class="d-flex justify-content-between gap-3">
+        <!-- Cột bài viết chính -->
         <div class="col-md-7">
-        <div v-for="post in userPosts" :key="post.id" class="border rounded-2 pt-3 mb-4 shadow ">
-          
-          <div class="d-flex align-items-center mb-3 ps-3">
-            <BAvatar :src="getFullUrl(post.user.avatarUrl)" variant="secondary" size="3rem" class="me-3" />
-            <div>
-              <p class="fs-5 fw-bold mb-0">{{ post.user.displayName }}</p>
-              <small class="text-muted">{{ formatDateTime(post.createdAt) }}</small>
-            </div>
-          </div>
-
-          <div class="ps-3 pe-3">
-            <h5 v-if="post.title" class="fw-bold">{{ post.title }}</h5>
-
-            <p v-if="post.content" class="post-content" v-html="formatContent(getDisplayedContent(post))"></p>
-            
-            <button
-              v-if="shouldShowToggle(post)"
-              @click="toggleContent(post.id)"
-              class="btn btn-link p-0 text-decoration-none text-dark fw-bold"
-            >
-              {{ expandedPosts[post.id] ? 'Ẩn bớt' : 'Xem thêm...' }}
-            </button>
-            
-            <div v-if="post.imageOrVideoUrl" class="mt-3 text-center bg-light">
-              <!-- === SỬA LỖI TẠI ĐÂY === -->
-              <video v-if="isVideoUrl(post.imageOrVideoUrl)" :src="getFullUrl(post.imageOrVideoUrl)" controls class="img-fluid rounded" style="max-height: 500px;"></video>
-              <img v-else :src="getFullUrl(post.imageOrVideoUrl)" alt="Nội dung bài viết" class="img-fluid rounded" style="max-height: 500px;">
+          <div v-for="post in processedPosts" :key="post.id" class="border rounded-2 pt-3 mb-4 shadow ">
+            <!-- Header bài viết -->
+            <div class="d-flex align-items-center mb-3 ps-3">
+              <BAvatar :src="post.author.avatarUrl" :text="post.author.displayName?.charAt(0).toUpperCase()" variant="secondary" size="3rem" class="me-3" />
+              <div>
+                <p class="fs-5 fw-bold mb-0">{{ post.author.displayName }}</p>
+                <small class="text-muted">{{ formatDateTime(post.createdAt) }}</small>
+              </div>
             </div>
 
-               <div class=" pt-2 border-top mt-1 mb-2">
-              <div class="d-flex justify-content-evenly align-items-center ">
-                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4">
-                      <i class="bi bi-hand-thumbs-up-fill "></i> (Số lượng)
-                  </BButton>
-                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4"> 
-                      <i class="bi bi-hand-thumbs-down-fill"></i> (số lượng)
-                  </BButton> 
-                  <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4" >
-                      <i class="bi bi-chat-fill "></i> Bình luận
-                  </BButton> 
-            </div>
+            <!-- Nội dung bài viết -->
+            <div class="ps-3 pe-3">
+              <h5 v-if="post.title" class="fw-bold">{{ post.title }}</h5>
+              <p v-if="post.content" class="post-content" v-html="formatContent(getDisplayedContent(post))"></p>
+              <button v-if="shouldShowToggle(post)" @click="toggleContent(post.id)" class="btn btn-link p-0 text-decoration-none text-dark fw-bold">
+                {{ expandedPosts[post.id] ? 'Ẩn bớt' : 'Xem thêm...' }}
+              </button>
+              
+              <div v-if="post.imageOrVideoUrl" class="mt-3 text-center bg-light">
+                <video v-if="isVideoUrl(post.imageOrVideoUrl)" :src="getFullUrl(post.imageOrVideoUrl)" controls class="img-fluid rounded" style="max-height: 500px;"></video>
+                <img v-else :src="getFullUrl(post.imageOrVideoUrl)" alt="Nội dung bài viết" class="img-fluid rounded" style="max-height: 500px;">
+              </div>
+
+              <!-- ✅ THANH TƯƠNG TÁC ĐÃ SỬA -->
+              <div class="pt-2 border-top mt-1 mb-2">
+                <div class="d-flex justify-content-evenly align-items-center ">
+                    <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4">
+                        <i class="bi bi-hand-thumbs-up-fill "></i> (Số lượng)
+                    </BButton>
+                    <BButton variant="outline-light"class="fs-5 border-0 text-secondary col-md-4"> 
+                        <i class="bi bi-hand-thumbs-down-fill"></i> (số lượng)
+                    </BButton> 
+                    <BButton variant="outline-light" class="fs-5 border-0 text-secondary col-md-4" @click="toggleComments(post)">
+                        <i class="bi bi-chat-fill "></i> Bình luận
+                    </BButton> 
+                </div>
+              </div>
+
+              <!-- ✅ KHU VỰC BÌNH LUẬN ĐÃ THÊM -->
+              <CommentSection
+                v-if="post.showComments"
+                :post-id="post.id"
+                :comments="commentsByPost[post.id] || []"
+                :current-user-id="loggedInUser?.id" 
+                @comment-submitted="fetchAllData"
+                @comment-updated="fetchAllData"  
+              />
             </div>
           </div>
         </div>
-      </div>
       
-    
-    <!-- PHẦN BÀI VIẾT GẦN ĐÂY BỊ THIẾU TRONG FILE GỐC, MÌNH THÊM LẠI CHO ĐÚNG CẤU TRÚC -->
-    <div class="col-md-4">
-      <div class="position-sticky" style="top: 2rem;">
-        <div>
-          <h4 class="fst-italic">Bài viết gần đây</h4>
-          
-          <div v-if="isRecentPostsLoading" class="d-flex justify-content-center my-3">
-            <div class="spinner-border text-secondary" role="status">
-              <span class="visually-hidden">Loading...</span>
+        <!-- Cột bài viết gần đây -->
+        <div class="col-md-4">
+          <div class="position-sticky" style="top: 2rem;">
+            <div>
+              <h4 class="fst-italic">Bài viết gần đây</h4>
+              <div v-if="isRecentPostsLoading" class="d-flex justify-content-center my-3">
+                <div class="spinner-border text-secondary" role="status"><span class="visually-hidden">Loading...</span></div>
+              </div>
+              <div v-else-if="recentPostsError" class="alert alert-warning small p-2">{{ recentPostsError }}</div>
+              <ul v-else class="list-unstyled">
+                <li v-if="recentPosts.length === 0" class="text-muted border-top pt-3">Chưa có bài viết nào.</li>
+                <li v-for="post in recentPosts" :key="post.id">
+                  <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
+                    <video v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)" :src="getFullUrl(post.imageOrVideoUrl)" class="bd-placeholder-img" width="100" height="96" autoplay muted loop playsinline></video>
+                    <img v-else-if="post.imageOrVideoUrl" :src="getFullUrl(post.imageOrVideoUrl)" class="bd-placeholder-img" width="100" height="96" />
+                    <div class="col-lg-8">
+                      <h6 class="mb-0">{{ truncateText(post.title || "Bài viết không có tiêu đề", 50) }}</h6>
+                      <small class="text-body-secondary">{{ formatDateTime(post.createdAt) }}</small>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
-
-          <div v-else-if="recentPostsError" class="alert alert-warning small p-2">
-            {{ recentPostsError }}
-          </div>
-          
-          <ul v-else class="list-unstyled">
-             <li v-if="recentPosts.length === 0" class="text-muted border-top pt-3">
-               Chưa có bài viết nào.
-             </li>
-            <li v-for="post in recentPosts" :key="post.id">
-              <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
-                
-                <video
-                  v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)"
-                  :src="getFullUrl(post.imageOrVideoUrl)"
-                  class="bd-placeholder-img"
-                  width="100"
-                  height="96"
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  alt="Post video preview"
-                ></video>
-                <img
-                  v-else-if="post.imageOrVideoUrl"
-                  :src="getFullUrl(post.imageOrVideoUrl)"
-                  class="bd-placeholder-img"
-                  width="100"
-                  height="96"
-                  alt="Post image"
-                />
-
-                <div class="col-lg-8">
-                  <h6 class="mb-0">{{ truncateText(post.title || "Bài viết không có tiêu đề", 50) }}</h6>
-                  <small class="text-body-secondary">{{ formatDateTime(post.createdAt) }}</small>
-                </div>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
-</div>
-</div>
   </main>
 </template>
 
 <script setup lang="ts">
 import { BAvatar, BButton } from 'bootstrap-vue-next';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { useAuth } from '../composables/useAuth'; // ✅ THÊM: Để lấy người dùng đăng nhập
+import CommentSection from '../components/CommentSection.vue'; // ✅ THÊM: Import component bình luận
 
-// --- Cấu hình chung ---
+// --- Cấu hình ---
 const API_BASE_URL = "http://localhost:3000";
-// --- ĐÃ THÊM LẠI ---
-// ID của người dùng cụ thể mà bạn muốn hiển thị ở cột trái
 const TARGET_USER_ID = "64560f4c-f7db-4838-aa9f-a82d79388b08"; 
 const CONTENT_TRUNCATE_LENGTH = 300; 
 
-// --- Quản lý State cho Bài đăng chính (Cột trái) ---
-const userPosts = ref<any[]>([]); 
+// --- Quản lý State ---
+const { user: loggedInUser } = useAuth(); // ✅ THÊM
+const users = ref<any[]>([]); // ✅ THÊM
+const posts = ref<any[]>([]); 
+const comments = ref<any[]>([]); // ✅ THÊM
+const processedPosts = ref<any[]>([]); // ✅ THÊM: State mới để chứa bài viết đã xử lý
+const commentsByPost = ref<{ [key: string]: any[] }>({}); // ✅ THÊM
+
 const loading = ref(true);
 const error = ref<string | null>(null);
 const expandedPosts = ref<{ [key: string]: boolean }>({}); 
 
-// --- Quản lý State cho Bài viết gần đây (Cột phải) ---
-interface Post {
-  id: string;
-  title: string | null;
-  imageOrVideoUrl: string | null;
-  createdAt: string;
-}
-const recentPosts = ref<Post[]>([]);
+const recentPosts = ref<any[]>([]);
 const isRecentPostsLoading = ref(true);
 const recentPostsError = ref<string | null>(null);
 
-// Biến để lưu interval ID cho việc polling
 let pollingInterval: number | undefined;
-function handleVisibilityChange() {
-  if (document.visibilityState === 'visible') {
-    // Khi người dùng quay lại tab này, fetch lại dữ liệu
-    console.log("Tab is visible again, fetching new posts...");
-    silentFetchUserPosts();
-    silentFetchRecentPosts();
-  }
-}
+
 // --- Vòng đời Component ---
 onMounted(() => {
-  // Tải dữ liệu lần đầu tiên
-  fetchUserPosts();
-  fetchRecentPosts();
-document.addEventListener('visibilitychange', handleVisibilityChange);
-  // Bắt đầu polling để tự động cập nhật cả 2 danh sách
-  pollingInterval = window.setInterval(() => {
-    console.log('Kiểm tra bài viết mới...');
-    // Cập nhật cả 2 danh sách trong nền
-    silentFetchUserPosts();
-    silentFetchRecentPosts();
-  }, 5000); // Kiểm tra mỗi 10 giây
+  fetchAllData();
+  pollingInterval = window.setInterval(fetchAllData, 10000); // Polling mỗi 10s
 });
-
-
 onUnmounted(() => {
-  // Dọn dẹp interval khi component bị hủy
-  if (pollingInterval) {
-    clearInterval(pollingInterval);
-  }
-  
-  document.removeEventListener('visibilitychange', handleVisibilityChange);
-
+  if (pollingInterval) clearInterval(pollingInterval);
 });
 
-// --- Các hàm tiện ích (Giữ nguyên) ---
+// ✅ THAY ĐỔI: Gộp các hàm fetch vào một hàm duy nhất
+async function fetchAllData() {
+  try {
+    const [postsRes, recentPostsRes, usersRes, commentsRes] = await Promise.all([
+      fetch(`${API_BASE_URL}/posts?userId=${TARGET_USER_ID}&_expand=user&_sort=createdAt&_order=desc`),
+      fetch(`${API_BASE_URL}/posts?_sort=createdAt&_order=desc&_limit=7`),
+      fetch(`${API_BASE_URL}/users`),
+      fetch(`${API_BASE_URL}/comments`),
+    ]);
+
+    if (!postsRes.ok || !recentPostsRes.ok || !usersRes.ok || !commentsRes.ok) {
+      throw new Error('Không thể tải dữ liệu từ server.');
+    }
+    
+    posts.value = await postsRes.json();
+    recentPosts.value = await recentPostsRes.json();
+    users.value = await usersRes.json();
+    comments.value = await commentsRes.json();
+    
+    error.value = null;
+
+  } catch (err: any) {
+    error.value = err.message;
+    console.error("Lỗi khi fetch data:", err);
+  } finally {
+    loading.value = false;
+    isRecentPostsLoading.value = false;
+  }
+}
+
+// ✅ THÊM: watch để xử lý dữ liệu khi có thay đổi
+watch([posts, users, comments], () => {
+  // Xử lý bài viết chính
+  const stateMap = processedPosts.value.reduce((acc, post) => {
+    acc[post.id] = { showComments: post.showComments, isExpanded: post.isExpanded };
+    return acc;
+  }, {} as {[key: string]: any});
+
+  processedPosts.value = posts.value.map(post => ({
+    ...post,
+    author: {
+        ...post.user,
+        avatarUrl: getFullUrl(post.user?.avatarUrl),
+    },
+    showComments: stateMap[post.id]?.showComments || false,
+    isExpanded: stateMap[post.id]?.isExpanded || false,
+  }));
+
+  // Xử lý bình luận
+  if (comments.value.length > 0 && users.value.length > 0) {
+    const userMap = new Map(users.value.map(user => [user.id, user]));
+    const groupedComments: { [key: string]: any[] } = {};
+
+    comments.value.forEach(comment => {
+      const author = userMap.get(comment.userId);
+      const processedComment = {
+        ...comment,
+        author: {
+          id: author?.id || null,
+          displayName: author?.displayName || 'Người dùng ẩn',
+          avatarUrl: getFullUrl(author?.avatarUrl)
+        },
+        createdAtFormatted: formatDateTime(comment.createdAt),
+      };
+      if (!groupedComments[comment.postId]) {
+        groupedComments[comment.postId] = [];
+      }
+      groupedComments[comment.postId].push(processedComment);
+    });
+    commentsByPost.value = groupedComments;
+  }
+}, { deep: true });
+
+
+// ✅ THÊM: Hàm để bật/tắt khu vực bình luận
+const toggleComments = (post: any) => {
+    if(!loggedInUser.value) {
+        alert("Bạn cần đăng nhập để xem và viết bình luận.");
+        return;
+    }
+    post.showComments = !post.showComments;
+};
+
+// --- Các hàm tiện ích (Giữ nguyên và cải tiến) ---
 const getFullUrl = (path: string | null): string => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
@@ -232,122 +262,17 @@ const getFullUrl = (path: string | null): string => {
 };
 const formatDateTime = (isoString: string | null): string => {
   if (!isoString) return '';
-  const date = new Date(isoString);
-  return date.toLocaleString('vi-VN', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
+  return new Date(isoString).toLocaleString('vi-VN');
 };
-const isVideoUrl = (url: string | null): boolean => {
-  if (!url) return false;
-  return /\.(mp4|webm|mov|ogg)$/i.test(url);
-};
-const formatContent = (text: string | null): string => {
-  if (!text) return '';
-  return text.replace(/\r\n/g, '<br>').replace(/\n/g, '<br>');
-};
-const truncateText = (text: string | null, maxLength: number): string => {
-  if (!text || text.length <= maxLength) return text || '';
-  return text.substr(0, maxLength) + "...";
-};
-
-// --- Logic cho luồng Bài đăng chính (Cột trái - CỦA 1 USER) ---
-
-// URL để lấy bài viết của user cụ thể
-const specificUserPostsUrl = `${API_BASE_URL}/posts?userId=${TARGET_USER_ID}&_expand=user&_sort=createdAt&_order=desc`;
-
-// Hàm fetch ban đầu, có spinner
-async function fetchUserPosts() {
-  loading.value = true;
-  error.value = null;
-  try {
-    const response = await fetch(specificUserPostsUrl);
-    if (!response.ok) throw new Error('Không thể tải bài viết.');
-    userPosts.value = await response.json();
-  } catch (err: any) {
-    error.value = err.message;
-  } finally {
-    loading.value = false;
-  }
-}
-
-// Hàm fetch "thầm lặng" cho polling, không có spinner
-async function silentFetchUserPosts() {
-  try {
-    const response = await fetch(specificUserPostsUrl);
-    if (!response.ok) {
-        console.error('Lỗi khi polling bài đăng chính.');
-        return;
-    }
-    const newPosts = await response.json();
-    if (JSON.stringify(newPosts) !== JSON.stringify(userPosts.value)) {
-        userPosts.value = newPosts;
-    }
-  } catch (err: any) {
-    console.error('Lỗi khi polling:', err.message);
-  }
-}
-
-const toggleContent = (postId: string) => {
-  expandedPosts.value[postId] = !expandedPosts.value[postId];
-};
-const getDisplayedContent = (post: any) => {
-  if (!post.content) return '';
-  if (post.content.length <= CONTENT_TRUNCATE_LENGTH || expandedPosts.value[post.id]) {
-    return post.content;
-  }
-  return post.content.substring(0, CONTENT_TRUNCATE_LENGTH) + '...';
-};
-const shouldShowToggle = (post: any) => {
-  return post.content && post.content.length > CONTENT_TRUNCATE_LENGTH;
-};
-
-
-// --- Logic cho danh sách Bài viết gần đây (Cột phải - CỦA TẤT CẢ USER) ---
-
-// URL để lấy bài viết gần đây của tất cả user
-const allRecentPostsUrl = `${API_BASE_URL}/posts?_sort=createdAt&_order=desc&_limit=7`;
-
-// Hàm fetch ban đầu, có spinner
-async function fetchRecentPosts() {
-  isRecentPostsLoading.value = true;
-  recentPostsError.value = null;
-  try {
-    const response = await fetch(allRecentPostsUrl); 
-    if (!response.ok) throw new Error('Không thể tải các bài viết gần đây.');
-    recentPosts.value = await response.json();
-  } catch (err: any) {
-    recentPostsError.value = err.message || 'Lỗi tải bài viết.';
-  } finally {
-    isRecentPostsLoading.value = false;
-  }
-}
-
-// Hàm fetch "thầm lặng", không có spinner
-async function silentFetchRecentPosts() {
-  try {
-    const response = await fetch(allRecentPostsUrl); 
-    if (!response.ok) {
-        console.error('Lỗi khi polling bài viết gần đây.');
-        return;
-    }
-    const newPosts = await response.json();
-    if (JSON.stringify(newPosts) !== JSON.stringify(recentPosts.value)) {
-        recentPosts.value = newPosts;
-    }
-  } catch (err: any) {
-    console.error('Lỗi khi polling:', err.message);
-  }
-}
+const isVideoUrl = (url: string | null): boolean => !!url && /\.(mp4|webm|mov|ogg)$/i.test(url);
+const formatContent = (text: string | null): string => text?.replace(/\r\n|\n/g, '<br>') || '';
+const truncateText = (text: string | null, maxLength: number): string => (!text || text.length <= maxLength) ? text || '' : text.substr(0, maxLength) + "...";
+const toggleContent = (postId: string) => expandedPosts.value[postId] = !expandedPosts.value[postId];
+const getDisplayedContent = (post: any) => post.content && (post.content.length <= CONTENT_TRUNCATE_LENGTH || expandedPosts.value[post.id]) ? post.content : (post.content?.substring(0, CONTENT_TRUNCATE_LENGTH) || '') + '...';
+const shouldShowToggle = (post: any) => post.content && post.content.length > CONTENT_TRUNCATE_LENGTH;
 </script>
 
 <style scoped>
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-}
-.post-content {
-  white-space: pre-wrap;
-  line-height: 1.6;
-}
+.img-fluid { max-width: 100%; height: auto; }
+.post-content { white-space: pre-wrap; line-height: 1.6; }
 </style>

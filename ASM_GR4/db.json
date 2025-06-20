@@ -145,6 +145,155 @@
       "content": "Mặc dù có khá nhiều bài viết, chia sẻ về AI nhưng theo mình là đa phần anh em trong nhóm (95%) vẫn còn chưa biết cách ứng dụng AI vào công việc cho người mới bắt đầu.\r\nDưới đây là tổng hợp 20 khóa học (miễn phí & trả phí) để anh em có thể tham gia, học được tại nhà và ứng dụng được AI ngay vào công việc. Cụ thể:\r\n1. LearnPrompting (https://learnprompting.org/):\r\nTrang này có 4 cấp độ: Beginner, Intermediate, Advanced và ứng dụng về Application. Nội dung tiếng anh, phù hợp mọi cấp độ & MIỄN PHÍ.\r\n2. GPTforWork (https://gptforwork.com/gpt-for-sheets/examples)\r\nHướng dẫn dùng ChatGPT để tạo công thức / hàm excel và vẽ đồ thị.\r\n3. AI Video Maker của @Hiếu AI. (https://hieuai.passio.eco/dp/course/115124):\r\nHướng dẫn chi tiết cách tự tạo 100+ video ngắn chuẩn viral của riêng bạn trong 1 ngày. Mình xin được code giảm 10% cho anh em là NGHIENAI10.\r\n4. PromptEngineering cho ChatGPT (https://www.coursera.org/learn/prompt-engineering) của đại học Vanderbilt.\r\nHướng dẫn tạo prompt, điều chỉnh cho phù hợp với từng công việc (Creators, Social Media, Business...).\r\n5. MidJourney 101 của Printify (https://printify.com/blog/midjourney-prompts/)\r\nHướng dẫn tạo Prompt Midjourney để in ảnh lên Áo thun / Cốc, với ví dụ.\r\n6. MidJourney Prompt MasterClass for AI Art (https://www.udemy.com/course/midjourney-prompt/)\r\nHọc cấu trúc của việc viết Prompt, phát triển kỹ năng tư duy tạo Prompt, cách thêm bớt cho phù hợp và điều chỉnh prompt.\r\n7. GPT01 - Tuyệt đỉnh ứng dụng ChatGPT (https://bit.ly/3rh1M6c)\r\nKhóa học này nói về nội dung cơ bản, nắm nền tảng, tuy nhiên theo mình mọi người nên đăng ký thành viên 199k/tháng để học tất cả các khóa (GPT + word + excel + ...) để tiết kiệm chi phí.\r\n8. You Probably Need A Robot (https://youprobablyneedarobot.com/)\r\nKhóa này dành cho các bạn muốn tiết kiệm 8 - 10 giờ/tuần qua các công cụ AI. Giá không hề rẻ ($199), nhưng cộng đồng chất lượng + có nhiều insight hay.\r\n9. ChatGPT Student's Pack (https://juliandigitaledge.gumroad.com/)\r\nTổng hợp 350 prompts ChatGPT cho Học sinh sinh viên, hàng miễn phí cho anh em dùng.\r\n10. Introduction to Generative AI (https://www.cloudskillsboost.google/course_templates/536)\r\nKhóa này của google, giới thiệu về Generative AI (MidJourney, SD,...) và dùng những công cụ của Google để tạo 1 app AI của riêng bạn.\r\nNgoài ra trên Group thì anh em có thể theo dõi các bài viết của các thành viên cứng như Tony Duc AI Bửu Trung Hồ Thương Tín để học cách ứng dụng AI vào công việc.\r\nThời gian tới thì mình và team sẽ tổng hợp các prompt ChatGPT & MidJourney cho các ngành nghề, anh em có đề xuất nghề nào thì để lại bình luận nhé.",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750236986686-385583487.jpg",
       "createdAt": "2025-06-18T08:56:26.689Z"
+    },
+    {
+      "id": "217ffbf5-04d2-4251-99a9-4698b80f4121",
+      "userId": "1",
+      "title": null,
+      "content": "đâsdasdas",
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-19T18:04:08.512Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": "comment-uuid-1",
+      "postId": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
+      "userId": "58dc",
+      "content": "Thông báo hay quá! Rất mong chờ cuộc thi.",
+      "createdAt": "2025-06-18T07:00:00.000Z",
+      "parentId": null,
+      "likedBy": [
+        "2",
+        "58dc",
+        "1"
+      ]
+    },
+    {
+      "id": "comment-uuid-2",
+      "postId": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
+      "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "content": "Cảm ơn bạn đã quan tâm. BTC sẽ cố gắng hết sức!",
+      "createdAt": "2025-06-18T07:05:15.000Z",
+      "parentId": "comment-uuid-1",
+      "likedBy": [
+        "1"
+      ]
+    },
+    {
+      "id": "comment-uuid-3",
+      "postId": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
+      "userId": "1",
+      "content": "Chúc cuộc thi thành công tốt đẹp!",
+      "createdAt": "2025-06-18T07:10:00.000Z",
+      "parentId": null,
+      "likedBy": []
+    },
+    {
+      "id": "comment-uuid-4",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "2",
+      "content": "Bài tổng hợp rất chi tiết và hữu ích, cảm ơn bạn nhiều.",
+      "createdAt": "2025-06-18T09:00:00.000Z",
+      "parentId": null,
+      "likedBy": [
+        "1",
+        "58dc",
+        "2",
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261"
+      ],
+      "likes": 3
+    },
+    {
+      "id": "1a7373ef-8b89-4efb-8015-69279626a3e8",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "1",
+      "content": "sao",
+      "createdAt": "2025-06-19T15:16:10.542Z",
+      "likedBy": [],
+      "parentId": null
+    },
+    {
+      "id": "5f1fb255-be0d-4763-9729-ac854ccd1079",
+      "postId": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
+      "userId": "1",
+      "content": "hay",
+      "createdAt": "2025-06-19T16:09:12.377Z",
+      "likedBy": [],
+      "parentId": null
+    },
+    {
+      "id": "abdb208c-39dc-44b4-a25b-c0645be7e440",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "1",
+      "content": "hay quá",
+      "createdAt": "2025-06-19T16:09:55.817Z",
+      "likedBy": [],
+      "parentId": null,
+      "likes": 1
+    },
+    {
+      "id": "a40e",
+      "content": "hay k",
+      "postId": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
+      "parentId": "5f1fb255-be0d-4763-9729-ac854ccd1079",
+      "userId": "1",
+      "createdAt": "2025-06-19T17:29:58.091Z",
+      "likedBy": []
+    },
+    {
+      "id": "af49461c-7bb6-4971-8abb-d7d89ba9fcb6",
+      "postId": "217ffbf5-04d2-4251-99a9-4698b80f4121",
+      "userId": "1",
+      "content": "hay",
+      "createdAt": "2025-06-19T18:06:27.919Z",
+      "likedBy": [],
+      "parentId": null
+    },
+    {
+      "id": "7edef9ae-e4d0-4272-ab7e-fceeca00783c",
+      "postId": "217ffbf5-04d2-4251-99a9-4698b80f4121",
+      "userId": "1",
+      "content": "d",
+      "createdAt": "2025-06-19T18:06:31.084Z",
+      "likedBy": [],
+      "parentId": "af49461c-7bb6-4971-8abb-d7d89ba9fcb6"
+    },
+    {
+      "id": "4b4219cc-cc02-4b02-8d9c-14c9bd95f142",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "1",
+      "content": "Bạn giống Magaming quá, có chơi freefire không?",
+      "createdAt": "2025-06-19T18:07:07.949Z",
+      "likedBy": [],
+      "parentId": "comment-uuid-4"
+    },
+    {
+      "id": "1c7d65c2-f648-4806-b847-44d3c0ccd487",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "1",
+      "content": "được",
+      "createdAt": "2025-06-19T18:09:46.588Z",
+      "likedBy": [],
+      "parentId": null
+    },
+    {
+      "id": "9a79e4b7-e39b-4814-9a69-0cb7dd64f737",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "1",
+      "content": "bạn ơi",
+      "createdAt": "2025-06-19T18:13:56.727Z",
+      "likedBy": [],
+      "parentId": "comment-uuid-4"
+    },
+    {
+      "id": "1a9d45bc-21a6-41c4-9506-04c66f714bc2",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "2",
+      "content": "Mình fan Magaming với cô Ngân bạn ơi",
+      "createdAt": "2025-06-19T18:15:10.105Z",
+      "likedBy": [],
+      "parentId": "4b4219cc-cc02-4b02-8d9c-14c9bd95f142"
     }
   ]
 }

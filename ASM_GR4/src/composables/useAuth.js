@@ -1,66 +1,92 @@
+// src/composables/useAuth.js (PHIÊN BẢN SỬA LỖI HOÀN CHỈNH)
+
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-// Khởi tạo state ở ngoài để nó là global singleton
+// -------------------------------------------------------------------
+// PHẦN KHỞI TẠO GLOBAL STATE (Singleton Pattern)
+// -------------------------------------------------------------------
+
+// 1. Tạo một biến ref toàn cục để lưu trạng thái người dùng.
+// Biến này sẽ chỉ được tạo một lần duy nhất cho toàn bộ ứng dụng.
 const user = ref(null);
 
-// Lấy dữ liệu từ localStorage khi ứng dụng khởi chạy
-const storedUser = localStorage.getItem('loggedInUser');
-if (storedUser) {
-    user.value = JSON.parse(storedUser);
+// 2. Tự động đọc dữ liệu từ localStorage ngay khi file này được import lần đầu.
+// Đây là chìa khóa để đảm bảo trạng thái luôn được khởi tạo sớm.
+try {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+        user.value = JSON.parse(storedUser);
+    }
+} catch (e) {
+    console.error("Lỗi khi đọc dữ liệu người dùng từ localStorage, dữ liệu sẽ được xóa:", e);
+    localStorage.removeItem('loggedInUser');
 }
 
+
+// -------------------------------------------------------------------
+// HÀM COMPOSABLE `useAuth`
+// -------------------------------------------------------------------
+
+// Hàm này sẽ trả về các công cụ để tương tác với global state ở trên.
 export function useAuth() {
-    const router = useRouter();
-
-    // Biến computed để kiểm tra có phải admin không
-    const isAdmin = computed(() => user.value?.role === 'admin');
     
-    // Biến computed để kiểm tra đã đăng nhập chưa
+    // --- Computed Properties ---
+    // Các biến này sẽ tự động cập nhật khi `user.value` thay đổi.
     const isLoggedIn = computed(() => !!user.value);
+    const isAdmin = computed(() => user.value?.role === 'admin');
 
-    // Hàm đăng xuất
-    const logout = () => {
-        localStorage.removeItem('loggedInUser');
-        user.value = null;
-        // Chuyển về trang chủ sau khi đăng xuất
-        router.push({ name: 'trang-chu' }).then(() => {
-            // Tải lại trang để đảm bảo mọi state được reset sạch sẽ
-            window.location.reload();
-        });
-    };
+    // --- Actions (Hành động) ---
     
-    // Hàm này sẽ được gọi từ component login để cập nhật state
-    // **Cải tiến nhỏ**: Thêm cả việc lưu vào localStorage ở đây để tập trung logic
-    const setUser = (userData) => {
+    // Hàm đăng nhập
+    const login = (userData) => {
         user.value = userData;
         localStorage.setItem('loggedInUser', JSON.stringify(userData));
     };
 
-    // --- HÀM MỚI ĐỂ CẬP NHẬT THÔNG TIN NGƯỜI DÙNG ---
+    // Hàm đăng xuất
+    const logout = () => {
+        // ✅ SỬA LỖI: Gọi `useRouter()` BÊN TRONG hàm `logout`.
+        // Điều này đảm bảo router chỉ được truy cập khi người dùng thực sự nhấn nút logout trong một component.
+        const router = useRouter(); 
+        
+        localStorage.removeItem('loggedInUser');
+        user.value = null;
+        
+        // Chuyển hướng về trang chủ một cách an toàn
+        router.push({ name: 'trang-chu' }).then(() => {
+            // Tải lại trang để reset mọi thứ
+            window.location.reload();
+        });
+    };
+    
+    // Hàm cập nhật thông tin người dùng (ví dụ: đổi avatar, tên)
     const updateUser = (updatedData) => {
-        // Chỉ thực hiện nếu người dùng đã đăng nhập
-        if (!user.value) {
-            console.error("Không thể cập nhật: người dùng chưa đăng nhập.");
-            return;
-        }
-
-        // 1. Cập nhật state cục bộ (reactive state)
-        // Dùng spread syntax (...) để gộp object user cũ và dữ liệu mới
-        // Các trường trong updatedData sẽ ghi đè lên các trường tương ứng trong user.value
+        if (!user.value) return;
+        
+        // Cập nhật cả state và localStorage
         user.value = { ...user.value, ...updatedData };
-
-        // 2. Lưu state đã cập nhật vào localStorage
-        // Điều này đảm bảo dữ liệu được duy trì khi người dùng tải lại trang
         localStorage.setItem('loggedInUser', JSON.stringify(user.value));
     };
 
+    // Hàm này được giữ lại để tương thích với code cũ của bạn nếu cần,
+    // nhưng hàm `login` đã bao gồm cả chức năng này.
+    const setUser = (userData) => {
+        login(userData);
+    };
+
     return {
+        // State
         user,
-        isAdmin,
+        
+        // Computed Getters
         isLoggedIn,
+        isAdmin,
+
+        // Actions
+        login, // <-- Dùng hàm này thay cho setUser để tên rõ ràng hơn
         logout,
-        setUser,
-        updateUser // <-- Thêm hàm mới vào object trả về
+        updateUser,
+        setUser, // <-- Vẫn giữ lại để tránh lỗi nếu code cũ đang dùng
     };
 }
