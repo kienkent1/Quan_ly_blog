@@ -30,7 +30,7 @@
             </BDropdownText>
           </BDropdown>
 
-          <!-- KHỐI v-if: HIỂN THỊ KHI CÓ BÀI VIẾT -->
+          <!-- HIỂN THỊ KHI CÓ BÀI VIẾT -->
           <div v-if="paginatedPosts.length > 0">
             <!-- Vòng lặp bài viết -->
             <div
@@ -41,7 +41,13 @@
               <!-- Header bài viết -->
               <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="d-flex align-items-center gap-3">
-                  <BAvatar :src="post.avatar" variant="secondary" size="3rem" class="me-3" />
+                  <BAvatar 
+                    :src="post.avatar"
+                    :text="post.authorName?.charAt(0).toUpperCase()"
+                    variant="secondary" 
+                    size="3rem" 
+                    class="me-3" 
+                  />
                   <div>
                     <div class="fw-bold">{{ post.authorName }}</div>
                     <div class="text-muted small">
@@ -72,8 +78,8 @@
                 >
                   <h5 class="fw-semibold">{{ post.title }}</h5>
                 </router-link>
-                <p v-if="!post.isExpanded" v-html="truncateContent(post.content)"></p>
-                <p v-else v-html="post.content?.replace(/\n/g, '<br />')"></p>
+                <div v-if="!post.isExpanded" v-html="truncateContent(post.content)"></div>
+                <div v-else v-html="post.content?.replace(/\n/g, '<br />')"></div>
                 <BButton
                   v-if="post.content && post.content.length > TRUNCATE_LENGTH"
                   variant="link"
@@ -99,6 +105,7 @@
                   :src="post.imageOrVideoUrl"
                   class="img-fluid rounded-3"
                   style="max-height: 450px; object-fit: contain"
+                  alt="Post content"
                 />
               </div>
 
@@ -108,10 +115,7 @@
                   <BButton
                     variant="outline-light"
                     class="fs-5 border-0 col-md-4"
-                    :class="{
-                      'text-primary': post.likes?.includes(loggedInUser?.id),
-                      'text-secondary': !post.likes?.includes(loggedInUser?.id)
-                    }"
+                    :class="{ 'text-primary': post.likes?.includes(loggedInUser?.id), 'text-secondary': !post.likes?.includes(loggedInUser?.id) }"
                     @click="handleInteraction(post, 'like')"
                   >
                     <i class="bi bi-hand-thumbs-up-fill"></i> ({{ post.likes?.length || 0 }})
@@ -119,10 +123,7 @@
                   <BButton
                     variant="outline-light"
                     class="fs-5 border-0 col-md-4"
-                    :class="{
-                      'text-primary': post.dislikes?.includes(loggedInUser?.id),
-                      'text-secondary': !post.dislikes?.includes(loggedInUser?.id)
-                    }"
+                    :class="{ 'text-primary': post.dislikes?.includes(loggedInUser?.id), 'text-secondary': !post.dislikes?.includes(loggedInUser?.id) }"
                     @click="handleInteraction(post, 'dislike')"
                   >
                     <i class="bi bi-hand-thumbs-down-fill"></i> ({{ post.dislikes?.length || 0 }})
@@ -132,10 +133,12 @@
                     class="fs-5 border-0 text-secondary col-md-4"
                     @click="toggleComments(post)"
                   >
-                    <i class="bi bi-chat-fill "></i> Bình luận
+                    <i class="bi bi-chat-fill"></i> Bình luận
                   </BButton>
                 </div>
               </div>
+              
+              <!-- Khu vực bình luận -->
               <CommentSection
                 v-if="post.showComments"
                 :post-id="post.id"
@@ -149,17 +152,10 @@
             </div>
 
             <!-- Phân trang -->
-            <BPagination
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="perPage"
-              first-number
-              last-number
-              class="d-flex justify-content-center mt-4"
-            />
+            <BPagination v-model="currentPage" :total-rows="rows" :per-page="perPage" first-number last-number class="d-flex justify-content-center mt-4" />
           </div>
 
-          <!-- ✅ THAY ĐỔI: Khi không có bài viết nào, chỉ cần 1 thông báo duy nhất -->
+          <!-- Khi không có bài viết nào -->
           <div v-else class="text-center text-muted py-5">
             <h5>Bạn chưa có bài viết nào.</h5>
           </div>
@@ -173,97 +169,59 @@
               <BFormInput
                 v-model="searchQuery"
                 type="text"
-                placeholder="Tìm kiếm trong bài viết của bạn..."
+                placeholder="Tìm trong bài viết của bạn..."
                 class="shadow-none search-input"
               />
               <i class="bi bi-search search-icon"></i>
             </div>
 
-            <!-- HIỂN THỊ KẾT QUẢ TÌM KIẾM (CHỈ HIỆN KHI CÓ NHẬP `searchQuery`) -->
+            <!-- HIỂN THỊ KẾT QUẢ TÌM KIẾM -->
             <div v-if="searchQuery.trim()">
               <h4 class="fst-italic">Kết quả tìm kiếm</h4>
               <ul v-if="searchResults.length > 0" class="list-unstyled">
                 <li v-for="post in searchResults" :key="`search-${post.id}`">
-                  <router-link
-                    :to="{ name: 'PostDetail', params: { id: post.id } }"
-                    class="post-title-link"
-                  >
-                    <a
-                      class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                      href="#"
-                    >
+                  <router-link :to="{ name: 'PostDetail', params: { id: post.id } }" class="post-title-link">
+                    <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
                       <video
                         v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)"
                         :src="post.imageOrVideoUrl"
                         style="width: 96px; height: 96px; object-fit: cover; border-radius: 0.25rem"
-                        autoplay
-                        muted
-                        loop
-                        playsinline
-                        alt="Post video preview"
+                        autoplay muted loop playsinline alt="Post video preview"
                       ></video>
                       <img
-                        v-else
-                        :src="
-                          post.imageOrVideoUrl || post.avatar || 'https://via.placeholder.com/96x96'
-                        "
+                        v-else :src="post.imageOrVideoUrl || post.avatar || 'https://via.placeholder.com/96x96'"
                         style="width: 96px; height: 96px; object-fit: cover; border-radius: 0.25rem"
                         alt="thumbnail"
                       />
                       <div class="col-lg-8">
                         <h6 class="mb-0">{{ post.title || 'Bài viết không có tiêu đề' }}</h6>
-                        <small class="text-body-secondary">{{
-                          new Date(post.createdAt).toLocaleDateString('vi-VN')
-                        }}</small>
+                        <small class="text-body-secondary">{{ new Date(post.createdAt).toLocaleDateString('vi-VN') }}</small>
                       </div>
-                    </a>
+                    </div>
                   </router-link>
                 </li>
               </ul>
               <p v-else class="text-muted border-top pt-3">Không tìm thấy bài viết nào.</p>
             </div>
 
-            <!-- HIỂN THỊ CÁC WIDGET MẶC ĐỊNH (CHỈ HIỆN KHI KHÔNG TÌM KIẾM) -->
+            <!-- HIỂN THỊ WIDGET MẶC ĐỊNH KHI KHÔNG TÌM KIẾM -->
             <div v-if="!searchQuery.trim()">
-              <!-- HIỂN THỊ TOP 5 BÀI VIẾT NỔI BẬT CỦA TOÀN TRANG -->
+              <!-- TOP BÀI VIẾT NỔI BẬT CỦA TOÀN TRANG -->
               <div class="border rounded-2 p-2 mb-4">
                 <h4 class="fst-italic mb-3 border-bottom pb-2">Top bài viết nổi bật</h4>
                 <ul v-if="topPosts.length > 0" class="list-unstyled mb-0">
                   <li v-for="post in topPosts" :key="`top-${post.id}`">
-                    <router-link
-                      :to="{ name: 'PostDetail', params: { id: post.id } }"
-                      class="post-title-link"
-                    >
-                      <a
-                        class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
-                        href="#"
-                      >
+                    <router-link :to="{ name: 'PostDetail', params: { id: post.id } }" class="post-title-link">
+                      <div class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top">
                         <video
                           v-if="post.imageOrVideoUrl && isVideoUrl(post.imageOrVideoUrl)"
                           :src="post.imageOrVideoUrl"
-                          style="
-                            width: 96px;
-                            height: 96px;
-                            object-fit: cover;
-                            border-radius: 0.25rem;
-                          "
-                          autoplay
-                          muted
-                          loop
-                          playsinline
-                          alt="Post video preview"
+                          style="width: 96px; height: 96px; object-fit: cover; border-radius: 0.25rem;"
+                          autoplay muted loop playsinline alt="Post video preview"
                         ></video>
                         <img
-                          v-else
-                          :src="
-                            post.imageOrVideoUrl || post.avatar || 'https://via.placeholder.com/96x96'
-                          "
-                          style="
-                            width: 96px;
-                            height: 96px;
-                            object-fit: cover;
-                            border-radius: 0.25rem;
-                          "
+                          v-else :src="post.imageOrVideoUrl || post.avatar || 'https://via.placeholder.com/96x96'"
+                          style="width: 96px; height: 96px; object-fit: cover; border-radius: 0.25rem;"
                           alt="thumbnail"
                         />
                         <div class="col-lg-8">
@@ -276,26 +234,24 @@
                             </span>
                           </small>
                         </div>
-                      </a></router-link
-                    >
+                      </div>
+                    </router-link>
                   </li>
                 </ul>
                 <p v-else class="text-muted border-top pt-3">Chưa có bài viết nổi bật.</p>
               </div>
 
-              <!-- HIỂN THỊ TOP TÁC GIẢ -->
+              <!-- TOP TÁC GIẢ -->
               <div class="border rounded-2 p-2">
                 <h4 class="fst-italic mb-3 border-bottom pb-2">Top tác giả</h4>
                 <ul v-if="topAuthors.length > 0" class="list-unstyled mb-0">
-                  <li
-                    v-for="author in topAuthors"
-                    :key="author.id"
-                    class="d-flex align-items-center mb-3"
-                  >
-                    <BAvatar :src="author.avatarUrl" variant="secondary" class="me-3" />
-                    <div class="flex-grow-1">
-                      <div class="fw-bold">{{ author.displayName }}</div>
-                    </div>
+                  <li v-for="author in topAuthors" :key="author.id" class="d-flex align-items-center mb-3">
+                    <router-link :to="{ name: 'user-profile', params: { userId: author.id } }" class="d-flex align-items-center text-decoration-none text-dark flex-grow-1">
+                      <BAvatar :src="author.avatarUrl" variant="secondary" class="me-3" />
+                      <div class="flex-grow-1">
+                        <div class="fw-bold">{{ author.displayName }}</div>
+                      </div>
+                    </router-link>
                     <BBadge pill variant="light" text-variant="dark" class="ms-auto">
                       {{ author.postCount }} bài viết
                     </BBadge>
@@ -312,463 +268,220 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watchEffect, watch } from 'vue'
-import { useAuth } from '../composables/useAuth'
-import CommentSection from './CommentSection.vue'
+import { onMounted, ref, computed, watchEffect, watch } from 'vue';
+import { useAuth } from '../composables/useAuth';
+import CommentSection from './CommentSection.vue';
 import {
-  BAvatar,
-  BPagination,
-  BButton,
-  BFormInput,
-  BDropdown,
-  BDropdownText,
-  BDropdownDivider,
-  BDropdownItemButton,
-  BBadge
-} from 'bootstrap-vue-next'
+  BAvatar, BPagination, BButton, BFormInput, BDropdown, BDropdownText, BDropdownDivider, BDropdownItemButton, BBadge
+} from 'bootstrap-vue-next';
 
-// --- State cho Authentication ---
-const { user: loggedInUser } = useAuth()
+const API_BASE_URL = 'http://localhost:3000';
 
-// --- State cho Bài viết và Người dùng ---
-const posts = ref<any[]>([])
-const users = ref<any[]>([])
-const processedPosts = ref<any[]>([])
-const searchQuery = ref('')
-const currentPage = ref(1)
-const perPage = 5
-const TRUNCATE_LENGTH = 250
+const { user: loggedInUser } = useAuth();
+const allPosts = ref<any[]>([]);
+const allUsers = ref<any[]>([]);
+const allComments = ref<any[]>([]);
+const processedPosts = ref<any[]>([]);
+const commentsByPost = ref<{ [key: string]: any[] }>({});
+const searchQuery = ref('');
+const currentPage = ref(1);
+const perPage = 5;
+const TRUNCATE_LENGTH = 250;
+const activeSort = ref<'newest' | 'top'>('newest');
 
-const allComments = ref<any[]>([])
-const commentsByPost = ref<{ [key: string]: any[] }>({})
-
-const activeSort = ref<'newest' | 'top'>('newest')
-
-// --- HÀM FETCH DỮ LIỆU ---
 async function fetchData() {
   try {
     const [postsRes, usersRes, commentsRes] = await Promise.all([
-      fetch('http://localhost:3000/posts'),
-      fetch('http://localhost:3000/users'),
-      fetch('http://localhost:3000/comments')
-    ])
-    posts.value = await postsRes.json()
-    users.value = await usersRes.json()
-    allComments.value = await commentsRes.json()
+      fetch(`${API_BASE_URL}/posts`),
+      fetch(`${API_BASE_URL}/users`),
+      fetch(`${API_BASE_URL}/comments`)
+    ]);
+    allPosts.value = await postsRes.json();
+    allUsers.value = await usersRes.json();
+    allComments.value = await commentsRes.json();
   } catch (error) {
-    console.error('Failed to fetch data:', error)
+    console.error('Failed to fetch data:', error);
   }
 }
 
-onMounted(() => {
-  fetchData()
-})
+onMounted(fetchData);
 
-const isVideoUrl = (url: string | null | undefined): boolean => {
-  if (!url) return false
-  return /\.(mp4|webm|mov|ogg)$/i.test(url)
-}
+const getFullUrl = (path: string | null) => path && !path.startsWith('http') ? `${API_BASE_URL}${path}` : path;
 
-// --- XỬ LÝ DỮ LIỆU SAU KHI FETCH ---
 watchEffect(() => {
-  if (posts.value.length > 0 && users.value.length > 0) {
-    const currentPostsMap = new Map(processedPosts.value.map((p) => [p.id, p]))
-    processedPosts.value = posts.value.map((post) => {
-      const author = users.value.find((u) => u.id === post.userId)
-      const existingPost = currentPostsMap.get(post.id)
-
-      let statusText = ''
-      let statusVariant = 'secondary'
-
-      switch (post.state) {
-        case 'pass':
-          statusText = 'Đã duyệt'
-          statusVariant = 'success'
-          break
-        case 'fail':
-          statusText = 'Bị từ chối'
-          statusVariant = 'danger'
-          break
-        default:
-          statusText = 'Đang chờ duyệt'
-          statusVariant = 'info'
-          break
-      }
-
-      let mediaUrl
-      if (post.imageOrVideoUrl) {
-        mediaUrl = post.imageOrVideoUrl.startsWith('http')
-          ? post.imageOrVideoUrl
-          : `http://localhost:3000${post.imageOrVideoUrl}`
-      }
-      let avatarUrl
-      if (author?.avatarUrl) {
-        avatarUrl = author.avatarUrl.startsWith('http')
-          ? author.avatarUrl
-          : `http://localhost:3000${author.avatarUrl}`
-      }
+  if (allPosts.value.length > 0 && allUsers.value.length > 0) {
+    const stateMap = new Map(processedPosts.value.map(p => [p.id, { isExpanded: p.isExpanded, showComments: p.showComments }]));
+    processedPosts.value = allPosts.value.map(post => {
+      const author = allUsers.value.find(u => u.id === post.userId);
+      const state = stateMap.get(post.id) || { isExpanded: false, showComments: false };
+      const statusMap = {
+        pass: { text: 'Đã duyệt', variant: 'success' },
+        fail: { text: 'Bị từ chối', variant: 'danger' }
+      };
+      const postStatus = statusMap[post.state] || { text: 'Đang chờ duyệt', variant: 'info' };
 
       return {
         ...post,
         authorName: author?.displayName || 'Không rõ',
-        avatar: avatarUrl || '',
-        imageOrVideoUrl: mediaUrl,
+        avatar: getFullUrl(author?.avatarUrl),
+        imageOrVideoUrl: getFullUrl(post.imageOrVideoUrl),
         createdAtFormatted: new Date(post.createdAt).toLocaleString('vi-VN'),
-        isExpanded: existingPost?.isExpanded || false,
-        showComments: existingPost?.showComments || false,
-        statusText: statusText,
-        statusVariant: statusVariant
-      }
-    })
-  } else {
-    processedPosts.value = []
-  }
-})
-
-watch(
-  allComments,
-  (newComments) => {
-    if (!newComments || newComments.length === 0 || !users.value.length) {
-      commentsByPost.value = {}
-      return
-    }
-    const userMap = new Map(users.value.map((user) => [user.id, user]))
-    const groupedComments: { [key: string]: any[] } = {}
-
-    newComments.forEach((comment) => {
-      const author = userMap.get(comment.userId)
-      const processedComment = {
-        ...comment,
-        author: {
-          displayName: author?.displayName || `Người dùng ẩn`,
-          avatarUrl: author?.avatarUrl || ''
-        },
-        createdAtFormatted: new Date(comment.createdAt).toLocaleString('vi-VN', {
-          timeStyle: 'short',
-          dateStyle: 'short'
-        })
-      }
-      if (!groupedComments[comment.postId]) {
-        groupedComments[comment.postId] = []
-      }
-      groupedComments[comment.postId].push(processedComment)
-    })
-    commentsByPost.value = groupedComments
-  },
-  { deep: true }
-)
-
-// WATCHER ĐỂ RESET PHÂN TRANG KHI LỌC hoặc TÌM KIẾM
-watch([activeSort, searchQuery], () => {
-  currentPage.value = 1
-})
-
-// --- COMPUTED PROPERTIES ---
-
-// Chỉ lấy các bài viết của người dùng đang đăng nhập
-const currentUserPosts = computed(() => {
-  if (!loggedInUser.value) return []
-  return processedPosts.value.filter((post) => post.userId === loggedInUser.value.id)
-})
-watch(loggedInUser, (newUser) => {
-  if (!newUser) {
-    // Nếu người dùng đăng xuất, reset các state của trang
-    searchQuery.value = '';
-    activeSort.value = 'newest';
-    currentPage.value = 1;
+        isExpanded: state.isExpanded,
+        showComments: state.showComments,
+        statusText: postStatus.text,
+        statusVariant: postStatus.variant
+      };
+    });
   }
 });
 
-// Sắp xếp danh sách bài viết của người dùng
+watch(allComments, (newComments) => {
+  if (!newComments || !allUsers.value.length) {
+    commentsByPost.value = {};
+    return;
+  }
+  const userMap = new Map(allUsers.value.map(u => [u.id, u]));
+  const grouped = {};
+  newComments.forEach(comment => {
+    const author = userMap.get(comment.userId);
+    const processed = {
+      ...comment,
+      author: {
+        displayName: author?.displayName || 'Người dùng ẩn',
+        avatarUrl: getFullUrl(author?.avatarUrl),
+      },
+      createdAtFormatted: new Date(comment.createdAt).toLocaleString('vi-VN', { timeStyle: 'short', dateStyle: 'short' })
+    };
+    if (!grouped[comment.postId]) grouped[comment.postId] = [];
+    grouped[comment.postId].push(processed);
+  });
+  commentsByPost.value = grouped;
+}, { deep: true });
+
+watch([activeSort, searchQuery, loggedInUser], () => {
+  currentPage.value = 1;
+});
+
+const currentUserPosts = computed(() => loggedInUser.value ? processedPosts.value.filter(p => p.userId === loggedInUser.value.id) : []);
+
 const sortedCurrentUserPosts = computed(() => {
-  const postsToSort = [...currentUserPosts.value]
+  const postsToSort = searchQuery.value.trim() 
+    ? currentUserPosts.value.filter(p => p.title?.toLowerCase().includes(searchQuery.value.toLowerCase()) || p.content?.toLowerCase().includes(searchQuery.value.toLowerCase()))
+    : [...currentUserPosts.value];
 
-  if (activeSort.value === 'top') {
-    postsToSort.sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))
-  } else {
-    postsToSort.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-  }
-  return postsToSort
-})
-
-// `searchResults` chỉ dành cho sidebar
-const searchResults = computed(() => {
-  if (!searchQuery.value.trim()) {
-    return []
-  }
-  const lowerCaseQuery = searchQuery.value.toLowerCase()
-  return currentUserPosts.value.filter(
-    (post) =>
-      post.title?.toLowerCase().includes(lowerCaseQuery) ||
-      post.content?.toLowerCase().includes(lowerCaseQuery)
-  )
-})
-
-// ✅ THAY ĐỔI: `mainPostList` giờ đây chỉ là danh sách đã được sắp xếp,
-// không còn bị ảnh hưởng bởi `searchQuery`.
-const mainPostList = computed(() => {
-  return sortedCurrentUserPosts.value;
+  return postsToSort.sort((a, b) => {
+    if (activeSort.value === 'top') return (b.likes?.length || 0) - (a.likes?.length || 0);
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 });
 
-// `rows` và `paginatedPosts` giờ đây dựa trên `mainPostList`
-const rows = computed(() => mainPostList.value.length)
+const searchResults = computed(() => searchQuery.value.trim() ? sortedCurrentUserPosts.value : []);
 
 const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * perPage
-  const end = start + perPage
-  return mainPostList.value.slice(start, end)
-})
+  const start = (currentPage.value - 1) * perPage;
+  const end = start + perPage;
+  return sortedCurrentUserPosts.value.slice(start, end);
+});
 
-// COMPUTED PROPERTIES CHO SIDEBAR (giữ nguyên logic)
+const rows = computed(() => sortedCurrentUserPosts.value.length);
+
 const topPosts = computed(() => {
-  if (!processedPosts.value.length) {
-    return []
-  }
-  const approvedPosts = processedPosts.value.filter((p) => p.state === 'pass')
-  return [...approvedPosts]
+  return processedPosts.value
+    .filter(p => p.state === 'pass')
     .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))
-    .slice(0, 5)
-})
+    .slice(0, 5);
+});
 
 const topAuthors = computed(() => {
-  if (!posts.value.length || !users.value.length) {
-    return []
-  }
-  const postCounts = posts.value.reduce((acc, post) => {
-    if (post.state === 'pass') {
-      acc[post.userId] = (acc[post.userId] || 0) + 1
-    }
-    return acc
-  }, {} as Record<string, number>)
-
-  return users.value
-    .map((user) => {
-      let avatarUrl
-      if (user.avatarUrl) {
-        avatarUrl = user.avatarUrl.startsWith('http')
-          ? user.avatarUrl
-          : `http://localhost:3000${user.avatarUrl}`
-      }
-      return {
-        ...user,
-        avatarUrl: avatarUrl,
-        postCount: postCounts[user.id] || 0
-      }
-    })
-    .filter((user) => user.postCount > 0)
+  const postCounts = allPosts.value.reduce((acc, post) => {
+    if (post.state === 'pass') acc[post.userId] = (acc[post.userId] || 0) + 1;
+    return acc;
+  }, {});
+  return allUsers.value
+    .map(user => ({ ...user, avatarUrl: getFullUrl(user.avatarUrl), postCount: postCounts[user.id] || 0 }))
+    .filter(user => user.postCount > 0)
     .sort((a, b) => b.postCount - a.postCount)
-    .slice(0, 5)
-})
+    .slice(0, 5);
+});
 
-// --- METHODS ---
-// Các methods còn lại giữ nguyên, không cần thay đổi.
-const setSort = (type: 'newest' | 'top') => {
-  activeSort.value = type
-}
+const isVideoUrl = (url) => url && /\.(mp4|webm|mov|ogg)$/i.test(url);
+const setSort = (type) => { activeSort.value = type; };
+const toggleExpand = (post) => { post.isExpanded = !post.isExpanded; };
+const toggleComments = (post) => { if (loggedInUser.value) post.showComments = !post.showComments; else alert('Bạn cần đăng nhập để xem bình luận.'); };
+const truncateContent = (content) => !content ? '' : content.length <= TRUNCATE_LENGTH ? content.replace(/\n/g, '<br />') : `${content.substring(0, TRUNCATE_LENGTH).replace(/\n/g, '<br />')}...`;
 
-async function handleDeletePost(postId: string) {
-  if (!confirm('Bạn chắc chắn muốn xóa bài viết này và tất cả bình luận liên quan?')) {
-    return;
-  }
-  
+async function callApi(endpoint, options = {}) {
   try {
-    // Chỉ cần gọi đến MỘT API duy nhất
-    const response = await fetch(`http://localhost:3000/posts/${postId}/cascade`, {
-      method: 'DELETE',
-    });
-    
-    // Kiểm tra phản hồi từ API mới của chúng ta
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Xóa bài viết thất bại.');
+      const errorData = await response.json().catch(() => ({ message: 'API call failed' }));
+      throw new Error(errorData.message);
     }
-    
-    // Nếu thành công, tải lại toàn bộ dữ liệu để cập nhật giao diện
-    await fetchData(); 
-    alert('Đã xóa bài viết thành công!');
-
+    return response.status !== 204 ? await response.json() : null;
   } catch (error) {
-    console.error('Lỗi khi xóa bài viết:', error);
-    alert((error as Error).message || 'Có lỗi xảy ra khi xóa.');
+    console.error(`Error calling ${endpoint}:`, error);
+    alert((error as Error).message || 'An unexpected error occurred.');
+    throw error;
   }
 }
 
-const toggleExpand = (post: any) => {
-  post.isExpanded = !post.isExpanded
-}
-const truncateContent = (content: string | null | undefined) =>
-  !content
-    ? ''
-    : content.length <= TRUNCATE_LENGTH
-    ? content.replace(/\n/g, '<br />')
-    : content.substring(0, TRUNCATE_LENGTH).replace(/\n/g, '<br />') + '...'
-
-const toggleComments = (post: any) => {
-  if (!loggedInUser.value) {
-    alert('Bạn cần đăng nhập để xem và viết bình luận.')
-    return
-  }
-  post.showComments = !post.showComments
-}
-
-const generateId = (length: number = 7): string => Math.random().toString(36).substring(2, 2 + length)
-
-async function handleAddComment(postId: string, content: string) {
-  if (!loggedInUser.value) {
-    alert('Vui lòng đăng nhập để bình luận.');
-    return;
-  }
-  
-  // Dữ liệu chỉ cần những thông tin này, server sẽ tự tạo id và ngày tháng
-  const commentPayload = { 
-    postId, 
-    userId: loggedInUser.value.id, 
-    content,
-    parentId: null // Đây là bình luận gốc
-  };
-
-  try {
-    // ✅ THAY ĐỔI: Gọi đến API tùy chỉnh có khả năng tạo thông báo
-    const res = await fetch('http://localhost:3000/api/comments', {
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(commentPayload), // Gửi payload đã được dọn dẹp
-    });
-    
-    if (!res.ok) throw new Error('Không thể gửi bình luận.');
-    
-    // Sau khi gửi thành công, fetch lại toàn bộ dữ liệu để cập nhật giao diện
-    await fetchData(); 
-  } catch (error) {
-    console.error('Lỗi khi thêm bình luận:', error);
-    alert('Đã có lỗi xảy ra khi gửi bình luận.');
-  }
-}
-
-async function handleAddReply(postId: string, { content, parentId }: { content: string, parentId: string }) {
-  if (!loggedInUser.value) {
-      alert('Vui lòng đăng nhập để trả lời bình luận.');
-      return;
-  }
-
-  // Dữ liệu gửi đi cho một trả lời
-  const replyPayload = { 
-      postId, 
-      userId: loggedInUser.value.id, 
-      content, 
-      parentId 
-  };
-  
-  try {
-    // ✅ THAY ĐỔI: Gọi đến API tùy chỉnh có khả năng tạo thông báo
-    const res = await fetch('http://localhost:3000/api/comments', {
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(replyPayload),
-    });
-
-    if (!res.ok) throw new Error('Không thể gửi trả lời.');
-    
-    // Tải lại dữ liệu để cập nhật giao diện
+async function handleDeletePost(postId) {
+  if (confirm('Bạn chắc chắn muốn xóa bài viết này và tất cả bình luận liên quan?')) {
+    await callApi(`/posts/${postId}/cascade`, { method: 'DELETE' });
     await fetchData();
-  } catch (error) {
-    console.error('Lỗi khi thêm trả lời:', error);
-    alert('Đã có lỗi xảy ra khi gửi trả lời.');
   }
 }
 
-async function handleDeleteComment(commentId: string) {
-  if (!confirm('Bạn chắc chắn muốn xóa bình luận này?')) return
-  try {
-    const replies = allComments.value.filter((c) => c.parentId === commentId)
-    await Promise.all(
-      replies.map((reply) => fetch(`http://localhost:3000/comments/${reply.id}`, { method: 'DELETE' }))
-    )
-    const res = await fetch(`http://localhost:3000/comments/${commentId}`, { method: 'DELETE' })
-    if (res.ok) await fetchData()
-  } catch (error) {
-    console.error('Lỗi khi xóa bình luận:', error)
+async function handleInteraction(post, interactionType) {
+  if (!loggedInUser.value) return alert('Bạn cần đăng nhập.');
+  await callApi(`/api/posts/${post.id}/interact`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: loggedInUser.value.id, interactionType })
+  });
+  await fetchData();
+}
+
+async function handleCommentAction(endpoint, payload) {
+  if (!loggedInUser.value) return alert('Vui lòng đăng nhập.');
+  await callApi(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  await fetchData();
+}
+
+const handleAddComment = (postId, content) => handleCommentAction('/api/comments', { postId, userId: loggedInUser.value.id, content, parentId: null });
+const handleAddReply = (postId, { content, parentId }) => handleCommentAction('/api/comments', { postId, userId: loggedInUser.value.id, content, parentId });
+
+async function handleDeleteComment(commentId) {
+  if (confirm('Bạn chắc chắn muốn xóa bình luận này?')) {
+    const replies = allComments.value.filter(c => c.parentId === commentId);
+    await Promise.all(replies.map(r => callApi(`/comments/${r.id}`, { method: 'DELETE' })));
+    await callApi(`/comments/${commentId}`, { method: 'DELETE' });
+    await fetchData();
   }
 }
 
-async function handleToggleLike(comment: any) {
-  if (!loggedInUser.value) return
-  const userId = loggedInUser.value.id
-  const likedBy = [...(comment.likedBy || [])]
-  const userIndex = likedBy.indexOf(userId)
-  if (userIndex > -1) {
-    likedBy.splice(userIndex, 1)
-  } else {
-    likedBy.push(userId)
-  }
-  try {
-    const res = await fetch(`http://localhost:3000/comments/${comment.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ likedBy })
-    })
-    if (res.ok) await fetchData()
-  } catch (error) {
-    console.error('Lỗi khi thích/bỏ thích:', error)
-  }
-}
-async function handleInteraction(post: any, interactionType: 'like' | 'dislike') {
-  if (!loggedInUser.value) {
-    alert('Bạn cần đăng nhập để thực hiện thao tác này.')
-    return
-  }
-
-  try {
-    const res = await fetch(`http://localhost:3000/api/posts/${post.id}/interact`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: loggedInUser.value.id,
-        interactionType: interactionType
-      })
-    })
-
-    if (!res.ok) {
-      throw new Error('Tương tác không thành công.')
-    }
-
-    await fetchData()
-  } catch (error) {
-    console.error(`Lỗi khi ${interactionType} bài viết:`, error)
-    alert('Đã có lỗi xảy ra. Vui lòng thử lại.')
-  }
+async function handleToggleLike(comment) {
+  if (!loggedInUser.value) return;
+  const likedBy = [...(comment.likedBy || [])];
+  const userIndex = likedBy.indexOf(loggedInUser.value.id);
+  userIndex > -1 ? likedBy.splice(userIndex, 1) : likedBy.push(loggedInUser.value.id);
+  await callApi(`/comments/${comment.id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ likedBy })
+  });
+  await fetchData();
 }
 </script>
 
 <style scoped>
-.carousel-item-height :deep(img) {
-  height: 450px;
-  object-fit: cover;
-  width: 100%;
-}
-
-.search-input-container {
-  position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 1rem;
-  color: #6c757d;
-  pointer-events: none;
-}
-
-.search-input {
-  padding-left: 2.5rem;
-}
-.post-title-link {
-  text-decoration: none; /* Bỏ gạch chân mặc định */
-  color: inherit; /* Giữ màu chữ gốc của thẻ h5 */
-}
-.post-title-link:hover .fw-semibold {
-  text-decoration: underline; /* Thêm gạch chân khi di chuột qua */
-  color: var(--bs-primary); /* Đổi màu chữ thành màu chính của Bootstrap */
-}
+.search-input-container { position: relative; }
+.search-icon { position: absolute; top: 50%; transform: translateY(-50%); left: 1rem; color: #6c757d; pointer-events: none; }
+.search-input { padding-left: 2.5rem; }
+.post-title-link { text-decoration: none; color: inherit; }
+.post-title-link:hover .fw-semibold { text-decoration: underline; color: var(--bs-primary); }
 </style>

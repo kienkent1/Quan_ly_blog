@@ -3,13 +3,9 @@
     <div class="d-grid gap-3 col-md-4 border p-3 rounded-2 shadow-sm">
       <h1>{{ formTitle }}</h1>
 
-      <BForm @submit.prevent="handleLogin">
+      <BForm @submit.prevent="handleSubmit">
         <!-- Luôn hiển thị trường Email -->
-        <BFormGroup
-          label="Email"
-          label-for="input-email"
-          class="my-1"
-        >
+        <BFormGroup label="Email" label-for="input-email" class="my-1">
           <BFormInput
             id="input-email"
             v-model="email"
@@ -22,29 +18,24 @@
           />
         </BFormGroup>
 
-        <!-- Hiển thị thông báo lỗi chung cho cả đăng nhập và quên mật khẩu -->
+        <!-- Hiển thị thông báo lỗi chung -->
         <p v-if="errorMessage" class="text-danger mt-2">{{ errorMessage }}</p>
 
-        <!-- Các nút cho chế độ Quên mật khẩu -->
+        <!-- Chế độ Quên mật khẩu -->
         <div v-if="isForgotPasswordMode" class="d-flex justify-content-between mt-3">
-          <!-- LỖI: showLoginForm không được định nghĩa -->
           <BButton type="button" @click="showLoginForm" :disabled="loading">
             <i class="bi bi-arrow-left"></i> Quay lại
           </BButton>
-          <BButton type="button" variant="secondary" @click="handleForgotPassword" :disabled="loading">
+          <BButton type="submit" variant="secondary" :disabled="loading">
             <span v-if="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
             {{ loading ? 'Đang xử lý...' : 'Tiếp tục' }}
             <i v-if="!loading" class="bi bi-arrow-right"></i>
           </BButton>
         </div>
 
-        <!-- Các thành phần cho chế độ Đăng nhập -->
+        <!-- Chế độ Đăng nhập -->
         <template v-if="!isForgotPasswordMode">
-          <BFormGroup
-            label="Mật khẩu"
-            label-for="input-password"
-            class="my-1"
-          >
+          <BFormGroup label="Mật khẩu" label-for="input-password" class="my-1">
             <BFormInput
               id="input-password"
               v-model="password"
@@ -62,39 +53,17 @@
           </BFormGroup>
           
           <div class="d-flex justify-content-end">
-             <!-- LỖI: showForgotPassword không được định nghĩa (Dòng 66) -->
-            <BLink
-              @click.prevent="showForgotPassword"
-              href="#"
-              underline-offset="3"
-              underline-opacity="0"
-              underline-offset-hover="1"
-              underline-opacity-hover="100"
-              variant="dark"
-              class="m-2"
-            >
-              Quên mật khẩu
-            </BLink>
-            <BLink
-              :to="{ name: 'dang-ky' }"
-              underline-offset="3"
-              underline-opacity="0"
-              underline-offset-hover="1"
-              underline-opacity-hover="100"
-              variant="dark"
-              class="m-2"
-            >
-              Đăng ký
-            </BLink>
+            <BLink @click.prevent="showForgotPassword" href="#" class="m-2"> Quên mật khẩu </BLink>
+            <BLink :to="{ name: 'dang-ky' }" class="m-2"> Đăng ký </BLink>
           </div>
 
           <div class="d-grid">
-            <BButton variant="secondary" type="submit" :disabled="loading" >
+            <BButton variant="secondary" type="submit" :disabled="loading">
               <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               {{ loading ? 'Đang xử lý...' : 'Đăng nhập' }}
             </BButton>
 
-            <BButton variant="secondary" @click="triggerGoogleLogin" :disabled="loading"  class="mt-3">
+            <BButton variant="secondary" @click="triggerGoogleLogin" :disabled="loading" class="mt-3">
               <i class="bi bi-google me-2"></i>
               Đăng nhập với Google
             </BButton>
@@ -118,21 +87,19 @@ import {
 } from 'bootstrap-vue-next'
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { googleTokenLogin } from 'vue3-google-login';
+import { googleTokenLogin, type GoogleLoginResponse } from 'vue3-google-login';
 import { useAuth } from '../composables/useAuth';
-
-// --- LẤY URL GỐC CỦA API TỪ FILE .ENV.DEVELOPMENT ---
-// Đây là thay đổi quan trọng nhất
-// const API_URL = import.meta.env.VITE_API_BASE_URL;
+// ✅ SỬA LỖI IMPORT: Thay đổi đường dẫn để trỏ đến file config.js trong thư mục src
+import { API_BASE_URL } from '@/config.js';
 
 // --- Định nghĩa kiểu dữ liệu cho User ---
 interface User {
-  id: number;
+  id: string;
   email: string;
   role: 'admin' | 'user';
-  name?: string;
-  avatar?: string;
-  loginMethod: 'password' | 'google';
+  displayName?: string;
+  avatarUrl?: string;
+  loginMethod: 'local' | 'google';
 }
 
 // --- State cho form ---
@@ -149,6 +116,7 @@ const formTitle = computed(() => isForgotPasswordMode.value ? 'Quên mật khẩ
 
 // --- Validation ---
 const passwordState = computed(() => {
+  if (isForgotPasswordMode.value) return null;
   if (password.value.length === 0) return null
   return password.value.length >= 6
 })
@@ -157,7 +125,8 @@ const passwordState = computed(() => {
 const loginUser = (user: User) => {
   localStorage.setItem('loggedInUser', JSON.stringify(user));
   setUser(user);
-  alert(`Chào mừng ${user.name || user.email}!`);
+  alert(`Chào mừng ${user.displayName || user.email}!`);
+  
   if (user.role === 'admin') {
     router.push({ name: 'admin-quan-ly-tai-khoan' });
   } else {
@@ -180,6 +149,15 @@ const showLoginForm = () => {
 
 // === CÁC HÀM XỬ LÝ CHÍNH ===
 
+// --- Hàm submit trung gian ---
+const handleSubmit = () => {
+  if (isForgotPasswordMode.value) {
+    handleForgotPassword();
+  } else {
+    handleLogin();
+  }
+};
+
 // --- Google Login ---
 const triggerGoogleLogin = async () => {
   errorMessage.value = '';
@@ -192,7 +170,7 @@ const triggerGoogleLogin = async () => {
   }
 };
 
-const handleGoogleLoginSuccess = async (response: any) => {
+const handleGoogleLoginSuccess = async (response: GoogleLoginResponse) => {
   loading.value = true;
   try {
     const googleUserResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -201,24 +179,17 @@ const handleGoogleLoginSuccess = async (response: any) => {
     if (!googleUserResponse.ok) throw new Error('Không thể lấy thông tin từ Google.');
     const googleUserData = await googleUserResponse.json();
 
-    // THAY ĐỔI 1: SỬ DỤNG API_URL
-    const serverResponse = await fetch(`http://localhost:3000/api/auth/google`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: googleUserData.email,
-        name: googleUserData.name,
-        picture: googleUserData.picture,
-      })
-    });
+    const checkUserUrl = `${API_BASE_URL}/users?email=${encodeURIComponent(googleUserData.email)}`;
+    const serverResponse = await fetch(checkUserUrl);
+    const existingUsers = await serverResponse.json();
 
-    const userDataFromServer = await serverResponse.json();
-    if (!serverResponse.ok) {
-      googleErrorMessage.value = userDataFromServer.message;
-      return;
+    if (existingUsers.length > 0) {
+      const user = existingUsers[0];
+      loginUser(user);
+    } else {
+      googleErrorMessage.value = 'Tài khoản Google này chưa được đăng ký trong hệ thống.';
     }
 
-    loginUser(userDataFromServer);
   } catch (error) {
     console.error('Lỗi khi xử lý đăng nhập Google:', error);
     googleErrorMessage.value = 'Đã có lỗi xảy ra. Vui lòng thử lại.';
@@ -229,35 +200,33 @@ const handleGoogleLoginSuccess = async (response: any) => {
 
 // --- Email/Password Login ---
 const handleLogin = async () => {
-  if (isForgotPasswordMode.value) return;
   errorMessage.value = '';
   googleErrorMessage.value = '';
-  if (!email.value || !password.value) {
-    errorMessage.value = 'Vui lòng nhập đầy đủ email và mật khẩu.';
+  
+  if (!email.value || passwordState.value !== true) {
+    errorMessage.value = 'Vui lòng nhập đầy đủ và đúng định dạng.';
     return;
   }
+
   loading.value = true;
 
   try {
-    const apiUrlToCall = `http://localhost:3000/api/login`;
-    console.log("ĐANG THỬ GỌI API ĐẾN:", apiUrlToCall); // Dòng debug
+    const apiUrlToCall = `${API_BASE_URL}/users?email=${encodeURIComponent(email.value)}&password=${encodeURIComponent(password.value)}`;
+    console.log("ĐANG GỌI API ĐĂNG NHẬP ĐẾN:", apiUrlToCall);
 
-    // THAY ĐỔI 2: SỬ DỤNG apiUrlToCall
-    const response = await fetch(apiUrlToCall, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-      })
-    });
+    const response = await fetch(apiUrlToCall);
+    const matchingUsers = await response.json();
 
-    const userData = await response.json();
     if (!response.ok) {
-      errorMessage.value = userData.message;
-      return;
+        throw new Error('Lỗi mạng hoặc server không phản hồi.');
     }
-    loginUser(userData);
+
+    if (matchingUsers.length > 0) {
+        const user = matchingUsers[0];
+        loginUser(user);
+    } else {
+        errorMessage.value = 'Email hoặc mật khẩu không chính xác.';
+    }
 
   } catch (error) {
     errorMessage.value = 'Không thể kết nối đến máy chủ. Vui lòng thử lại.';
@@ -277,26 +246,34 @@ const handleForgotPassword = async () => {
   errorMessage.value = '';
   
   try {
-    // THAY ĐỔI 3: SỬ DỤNG API_URL
-    // const response = await fetch(`${API_URL}/api/forgot-password`, {
-    const response = await fetch(`http://localhost:3000/api/forgot-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value }),
-    });
+    const checkEmailUrl = `${API_BASE_URL}/users?email=${encodeURIComponent(email.value)}`;
+    const response = await fetch(checkEmailUrl);
+    const matchingUsers = await response.json();
 
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || 'Lỗi không xác định.');
+    if (!response.ok) throw new Error('Lỗi kiểm tra email.');
+
+    if (matchingUsers.length > 0) {
+      alert(`Một email hướng dẫn đặt lại mật khẩu đã được gửi đến ${email.value}. Vui lòng kiểm tra hộp thư của bạn.`);
+      showLoginForm();
+    } else {
+      errorMessage.value = 'Email này không tồn tại trong hệ thống.';
     }
-    alert(data.message);
-    showLoginForm();
 
   } catch (error) {
-    errorMessage.value = error instanceof Error ? error.message : 'Lỗi không xác định. Vui lòng thử lại.';
+    const err = error as Error;
+    errorMessage.value = err.message || 'Lỗi không xác định. Vui lòng thử lại.';
     console.error('Lỗi quên mật khẩu:', error);
   } finally {
     loading.value = false;
   }
 };
 </script>
+
+<style scoped>
+.m-2 {
+  text-decoration: none;
+}
+.m-2:hover {
+  text-decoration: underline;
+}
+</style>
