@@ -1,7 +1,4 @@
 <script setup>
-import TrangChu from './components/TrangChu.vue'
-import BaiViet from  './components/BaiViet.vue'
-import BaiVietCaNhan from './components/BaiVietCaNhan.vue'
 import TheNavbar from './components/TheNavbar.vue'
 
 </script>
@@ -15,7 +12,11 @@ import TheNavbar from './components/TheNavbar.vue'
   <!-- Đừng quên đặt <router-view /> ở đâu đó trong layout của bạn (thường là App.vue) -->
   <!-- để nội dung các trang có thể hiển thị -->
   <main class="container mt-4">
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
     
   </main>
   <footer class=" text-body-secondary bg-body-tertiary col-xl-12 mt-5 "> 

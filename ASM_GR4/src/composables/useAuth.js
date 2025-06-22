@@ -26,7 +26,7 @@ export function useAuth() {
         // Chuyển về trang chủ sau khi đăng xuất
         router.push({ name: 'trang-chu' }).then(() => {
             // Tải lại trang để đảm bảo mọi state được reset sạch sẽ
-            window.location.reload();
+          
         });
     };
     

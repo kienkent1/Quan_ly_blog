@@ -107,7 +107,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue'; 
+import { useAuth } from '../composables/useAuth';
 import {
   BButton,
   BForm,
@@ -122,6 +123,17 @@ const content = ref('');
 const text = ref('');
 const isLoading = ref(false);
 
+const { user: loggedInUser } = useAuth();
+watch(loggedInUser, (newUser) => {
+  // Nếu người dùng vừa đăng xuất (newUser là null)
+  if (!newUser) {
+    // Reset lại form về trạng thái ban đầu
+    file.value = null;
+    content.value = '';
+    text.value = '';
+    isLoading.value = false; // Cũng nên reset trạng thái loading
+  }
+});
 // --- STATE CHO DANH SÁCH BÀI VIẾT GẦN ĐÂY ---
 interface Author {
   displayName: string;
@@ -133,6 +145,9 @@ interface Post {
   imageOrVideoUrl: string | null;
   createdAt: string;
   author: Author;
+  like:string[]|null;
+  dislike:string[]|null;
+  state: string|null;
 }
 const recentPosts = ref<Post[]>([]);
 const isRecentPostsLoading = ref(true);
@@ -142,8 +157,6 @@ const recentPostsError = ref<string | null>(null);
 
 /**
  * Hàm mới: Kiểm tra xem URL có phải là của video hay không.
- * @param url - Đường dẫn đến file
- * @returns {boolean} - True nếu là video, ngược lại là false
  */
 const isVideoUrl = (url: string | null): boolean => {
   if (!url) return false;
@@ -170,7 +183,7 @@ async function fetchRecentPosts() {
   isRecentPostsLoading.value = true;
   recentPostsError.value = null;
   try {
-    const response = await fetch('http://localhost:3000/api/posts/recent');
+    const response = await fetch('http://localhost:3000/api/posts/recent?state=pass');
     if (!response.ok) throw new Error('Không thể tải bài viết.');
     recentPosts.value = await response.json();
   } catch (err: any) {
@@ -182,17 +195,12 @@ async function fetchRecentPosts() {
 
 // 2. Hàm đăng bài
 async function dangBai() {
-  const userString = localStorage.getItem('loggedInUser');
-  if (!userString) {
+  // ✅ THAY ĐỔI LỚN: Sử dụng loggedInUser từ useAuth, không dùng localStorage
+  if (!loggedInUser.value) {
     alert('Bạn cần đăng nhập để thực hiện chức năng này.');
     return;
   }
-  const user = JSON.parse(userString);
-  const userId = user.id;
-  if (!userId) {
-    alert('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
-    return;
-  }
+  const userId = loggedInUser.value.id;
 
   isLoading.value = true;
   const formData = new FormData();

@@ -255,7 +255,6 @@ const toggleUserLock = async () => {
 };
 
 const deleteUser = async () => {
-  // ... (Không đổi)
   if (!selectedUser.value) return;
   
   if (selectedUser.value.role === 'admin') {
@@ -263,19 +262,29 @@ const deleteUser = async () => {
     return;
   }
   
-  if (!confirm(`Bạn có chắc chắn muốn xóa người dùng "${selectedUser.value.email}" không? Hành động này không thể hoàn tác.`)) return;
+  if (!confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn người dùng "${selectedUser.value.email}" và TẤT CẢ dữ liệu của họ (bài viết, bình luận...)? Hành động này không thể hoàn tác.`)) return;
   
   if (isActionLoading.value) return;
   isActionLoading.value = true;
   try {
-    const response = await fetch(`/users/${selectedUser.value.id}`, { method: 'DELETE' });
+    // SỬA ĐỔI CHÍNH Ở ĐÂY: Gọi API mới
+    const response = await fetch(`/api/users/${selectedUser.value.id}/cascade`, { 
+        method: 'DELETE' 
+    });
+
     if (!response.ok) {
-        throw new Error('Xóa thất bại');
+        // Lấy thông báo lỗi từ server nếu có
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Xóa thất bại');
     }
-    await fetchUsers();
+    // Nếu thành công, không cần response.json() vì API có thể chỉ trả về message
+    alert('Xóa người dùng và dữ liệu liên quan thành công!');
+    await fetchUsers(); // Tải lại danh sách sau khi xóa
+
   } catch (error) {
     console.error('Lỗi khi xóa người dùng:', error);
-    alert('Có lỗi xảy ra, vui lòng thử lại.');
+    // Hiển thị lỗi cụ thể hơn cho người dùng
+    alert(`Có lỗi xảy ra: ${error instanceof Error ? error.message : 'Vui lòng thử lại.'}`);
   } finally {
     isActionLoading.value = false;
   }

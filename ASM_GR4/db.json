@@ -20,7 +20,7 @@
       "id": "58dc",
       "email": "kienpxtb00438@fpt.edu.vn",
       "displayName": "Phung Xuong Kien (PTCD DGN)",
-      "avatarUrl": "/uploads/avatar-1750046167450-158140131.png",
+      "avatarUrl": "/uploads/avatar-1750582322423-572358962.png",
       "role": "admin",
       "loginMethod": "google",
       "password": null
@@ -28,7 +28,7 @@
     {
       "id": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
       "email": "test1@test.t",
-      "password": "test123",
+      "password": "user123",
       "displayName": "test1",
       "role": "user",
       "avatarUrl": "/uploads/avatar-1750033353706-648257588.jpg",
@@ -37,7 +37,7 @@
     {
       "id": "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9",
       "email": "a@a.a",
-      "password": "a12345",
+      "password": "user123",
       "displayName": "a",
       "role": "user",
       "avatarUrl": null,
@@ -47,11 +47,12 @@
     {
       "id": "786910fe-38c0-45e2-bd19-bca7e0bc811f",
       "email": "b@b.b",
-      "password": "b12345",
+      "password": "user123",
       "displayName": "b",
       "role": "user",
       "avatarUrl": null,
-      "loginMethod": "local"
+      "loginMethod": "local",
+      "status": "active"
     },
     {
       "id": "59d6d665-0abe-4201-b41f-5b7b242eb776",
@@ -59,13 +60,13 @@
       "password": null,
       "displayName": "Xuongkien Phung",
       "role": "user",
-      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJujQ1qYgYn2LlMmGOhSaXXJkapVO7yasoeBE37a5M_zQU9kA=s96-c",
+      "avatarUrl": "/uploads/avatar-1750569716789-944380564.jpg",
       "loginMethod": "google"
     },
     {
       "id": "ffff6c11-1c30-4fa7-85cd-0b7113c2c7f8",
       "email": "phungxuongkien@gmail.com",
-      "password": "pxk123",
+      "password": "user123",
       "displayName": "phungxuongkien",
       "role": "user",
       "avatarUrl": null,
@@ -74,29 +75,42 @@
     {
       "id": "64560f4c-f7db-4838-aa9f-a82d79388b08",
       "email": "CNTT@fdfd.fe",
-      "password": "CNTT123",
+      "password": "user123",
       "displayName": "Bộ môn CNTT Fpoly Đồng Nai",
       "role": "user",
       "avatarUrl": "/uploads/avatar-1750229102636-368043081.jpg",
       "loginMethod": "local"
+    },
+    {
+      "id": "db0308c9-2383-4a1f-bcfd-95d50de09dc9",
+      "email": "tu@tu.com",
+      "password": "user123",
+      "displayName": "tú",
+      "role": "user",
+      "avatarUrl": "/uploads/avatar-1750582608660-910019888.jpg",
+      "loginMethod": "local"
+    },
+    {
+      "id": "d610e600-e0e5-454c-a883-29afb600b98b",
+      "email": "dau@dau.com",
+      "password": "user123",
+      "displayName": "Dâu",
+      "role": "user",
+      "avatarUrl": "/uploads/avatar-1750583050723-176199015.jpg",
+      "loginMethod": "local"
     }
   ],
   "posts": [
-    {
-      "id": "c10085d2-79dc-4818-bab8-46bcb7bb8d42",
-      "userId": "58dc",
-      "title": "te",
-      "content": null,
-      "imageOrVideoUrl": null,
-      "createdAt": "2025-06-17T02:52:04.643Z"
-    },
     {
       "id": "3c976d80-d52d-47c3-8064-611efc541663",
       "userId": "58dc",
       "title": null,
       "content": "cccd",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750129994292-919951759.jpg",
-      "createdAt": "2025-06-17T03:13:14.297Z"
+      "createdAt": "2025-06-17T03:13:14.297Z",
+      "likes": [],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "e9956aa2-5769-47f1-9476-2150a6b06c86",
@@ -104,7 +118,10 @@
       "title": null,
       "content": null,
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750130022709-669330342.mp4",
-      "createdAt": "2025-06-17T03:13:42.924Z"
+      "createdAt": "2025-06-17T03:13:42.924Z",
+      "likes": [],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "2c0fa95a-6b50-4659-9b8b-e53fade1f803",
@@ -112,7 +129,18 @@
       "title": "🔔 THÔNG BÁO: SƠ ĐỒ VỊ TRÍ THI – CUỘC THI “CODE ĐAM MÊ – CHẠM TƯƠNG LAI”",
       "content": "📅 Thời gian: 13h00, Thứ Bảy – ngày 14.06.2025\r\n📍 Địa điểm: Hội trường lầu 5 – Trường Cao đẳng FPT Polytechnic cơ sở Đồng Nai\r\n📌 Địa chỉ: 193 Đỗ Văn Thi, Hiệp Hòa, Biên Hòa\r\n🔥 Các chiến binh công nghệ đã sẵn sàng chưa? Dưới đây là sơ đồ xếp chỗ chính thức dành cho các đội thi trong cuộc thi “Code Đam Mê – Chạm Tương Lai” do Bộ môn Công nghệ Thông tin tổ chức! Hãy kiểm tra kỹ sơ đồ để biết được nhóm mình ngồi ở đâu và đến đúng vị trí nhé!\r\n🖥 Cuộc thi là sân chơi lập trình ứng dụng thực tế, nơi các bạn sinh viên sử dụng .NET kết nối với cơ sở dữ liệu Northwind, thể hiện khả năng code app, thiết kế giao diện, xây dựng logic nghiệp vụ và tối ưu xử lý dữ liệu. Đây không chỉ là một thử thách về kỹ thuật mà còn là cơ hội thể hiện đam mê, sự sáng tạo và tinh thần đồng đội.\r\n📌 Lưu ý:\r\nCó mặt trước giờ thi ít nhất 15 phút để ổn định chỗ ngồi và chuẩn bị tinh thần.\r\nMang theo laptop cá nhân, cáp sạc và các tài nguyên cần thiết (dự phòng nếu cần).\r\nTuân thủ nghiêm túc quy định và thời gian cuộc thi.\r\n❤️ BTC Bộ môn CNTT chân thành cảm ơn các bạn sinh viên đã quan tâm và đăng ký tham gia cuộc thi một cách nhiệt tình và đông đảo. Chính sự nhiệt huyết và tinh thần chinh phục công nghệ của các bạn là nguồn động lực để chúng tôi tổ chức cuộc thi này thật chỉn chu, chất lượng và truyền cảm hứng!\r\n📩 Mọi thắc mắc liên quan đến sơ đồ chỗ ngồi hay cuộc thi, vui lòng liên hệ ngay với Ban Tổ Chức để được hỗ trợ nhanh chóng.\r\n💪 Chúc tất cả các đội thi một buổi chiều thi thật tự tin – quyết đoán – bùng nổ sáng tạo và tỏa sáng chiến thắng!",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750229153574-92838855.jpg",
-      "createdAt": "2025-06-18T06:45:53.578Z"
+      "createdAt": "2025-06-18T06:45:53.578Z",
+      "likes": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+        "58dc",
+        "1",
+        "2",
+        "786910fe-38c0-45e2-bd19-bca7e0bc811f",
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9"
+      ],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
@@ -120,7 +148,18 @@
       "title": "📣📣📣 CUỘC THI CODE ĐAM MÊ – CHẠM TƯƠNG LAI BỘ MÔN CÔNG NGHỆ THÔNG TIN – FPT POLYTECHNIC ĐỒNG NAI",
       "content": "Nhằm tạo sân chơi thực hành lập trình bổ ích, khuyến khích tinh thần sáng tạo và ứng dụng công nghệ trong xây dựng ứng dụng, Bộ môn Công nghệ Thông tin – Cao đẳng FPT Polytechnic Đồng Nai chính thức phát động:\r\n🎯 CUỘC THI CODE ĐAM MÊ – CHẠM TƯƠNG LAI\r\n📅 Thời gian tổ chức: Thứ Bảy, ngày 14/06/2025, vào lúc 13h00\r\n📍 Địa điểm: Phòng hội trường lầu 5, cơ sở 2 Cao đẳng FPT Polytechnic Đồng Nai\r\n🎓 Đối tượng tham gia: Sinh viên ngành Công nghệ thông tin tại FPT Polytechnic Đồng Nai\r\n🧠 Nội dung thi (thực hành trên CSDL có sẵn):\r\n• Thiết kế giao diện người dùng (hình thức thí sinh tự chọn)\r\n• Thực hiện các chức năng cơ bản:\r\nThêm dữ liệu\r\nXóa dữ liệu\r\nChỉnh sửa dữ liệu\r\nTìm kiếm theo từ khóa\r\nSắp xếp theo tiêu chí lựa chọn\r\n🏆 Giải thưởng hấp dẫn:\r\n🥇 Giải Nhất: 1.000.000 VNĐ + Giấy chứng nhận\r\n🥈 Giải Nhì: 700.000 VNĐ + Giấy chứng nhận\r\n🥉 Giải Ba: 500.000 VNĐ + Giấy chứng nhận\r\n🎖️ 3 Giải khuyến khích: 100.000 VNĐ + Giấy chứng nhận\r\n🎁 Tất cả các đội tham gia đều nhận được điểm rèn luyện và phần quà từ nhà trường.\r\n📌 Hình thức đăng ký: https://forms.gle/LB9mnR2324gpggu7A\r\n(Đăng ký theo nhóm 2 sinh viên)\r\n🔥 Hãy nhanh tay đăng ký để thử sức, trau dồi kỹ năng và cùng nhau chạm tới tương lai công nghệ!\r\nFPT Polytechnic – Học nhanh, làm sớm!",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750229217190-85809154.jpg",
-      "createdAt": "2025-06-18T06:46:57.195Z"
+      "createdAt": "2025-06-18T06:46:57.195Z",
+      "likes": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+        "58dc",
+        "1",
+        "2",
+        "786910fe-38c0-45e2-bd19-bca7e0bc811f",
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9"
+      ],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
@@ -128,7 +167,18 @@
       "title": "[Recap cuộc thi Code đam mê - chạm tương lai\"",
       "content": "#CodeDamMe2025 #FPTPolytechnic #CNTTĐồngNai #ChạmTươngLai #SinhVienCNTT #ThiLapTrinhThucTe",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750229416188-310277260.mp4",
-      "createdAt": "2025-06-18T06:50:16.512Z"
+      "createdAt": "2025-06-18T06:50:16.512Z",
+      "likes": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+        "1",
+        "2",
+        "786910fe-38c0-45e2-bd19-bca7e0bc811f",
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9",
+        "58dc"
+      ],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "1ebec079-19f4-4187-af92-c377f1a4180a",
@@ -136,7 +186,18 @@
       "title": "VÃI THẬT!!!! Bytedance ra mắt Seedance 1.0: Cuộc chơi Video AI chính thức bắt đầu!",
       "content": "Bytedance đã chính thức tham gia đường đua VideoGen AI với Seedance 1.0 – mô hình video AI thế hệ mới có khả năng chuyển động siêu mượt, siêu nét, đầy tính nghệ thuật và đột phá.\r\n\r\nSeedance không chỉ đơn thuần là tạo video – mà là bước nhảy vọt vượt qua mọi giới hạn về chất lượng và khả năng sáng tạo. Một kỷ nguyên mới cho Video AI đã bắt đầu!\r\n\r\nAE tham khảo ngay nhé👇",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750236022384-691682170.mp4",
-      "createdAt": "2025-06-18T08:40:22.718Z"
+      "createdAt": "2025-06-18T08:40:22.718Z",
+      "likes": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+        "58dc",
+        "1",
+        "2",
+        "786910fe-38c0-45e2-bd19-bca7e0bc811f",
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "22b7d1ed-f92d-457e-bbd9-eddbf1369ac9"
+      ],
+      "dislikes": [],
+      "state": "pass"
     },
     {
       "id": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
@@ -144,7 +205,259 @@
       "title": "TỔNG HỢP 10 KHÓA HỌC ỨNG DỤNG AI CHO NGƯỜI MỚI BẮT ĐẦU",
       "content": "Mặc dù có khá nhiều bài viết, chia sẻ về AI nhưng theo mình là đa phần anh em trong nhóm (95%) vẫn còn chưa biết cách ứng dụng AI vào công việc cho người mới bắt đầu.\r\nDưới đây là tổng hợp 20 khóa học (miễn phí & trả phí) để anh em có thể tham gia, học được tại nhà và ứng dụng được AI ngay vào công việc. Cụ thể:\r\n1. LearnPrompting (https://learnprompting.org/):\r\nTrang này có 4 cấp độ: Beginner, Intermediate, Advanced và ứng dụng về Application. Nội dung tiếng anh, phù hợp mọi cấp độ & MIỄN PHÍ.\r\n2. GPTforWork (https://gptforwork.com/gpt-for-sheets/examples)\r\nHướng dẫn dùng ChatGPT để tạo công thức / hàm excel và vẽ đồ thị.\r\n3. AI Video Maker của @Hiếu AI. (https://hieuai.passio.eco/dp/course/115124):\r\nHướng dẫn chi tiết cách tự tạo 100+ video ngắn chuẩn viral của riêng bạn trong 1 ngày. Mình xin được code giảm 10% cho anh em là NGHIENAI10.\r\n4. PromptEngineering cho ChatGPT (https://www.coursera.org/learn/prompt-engineering) của đại học Vanderbilt.\r\nHướng dẫn tạo prompt, điều chỉnh cho phù hợp với từng công việc (Creators, Social Media, Business...).\r\n5. MidJourney 101 của Printify (https://printify.com/blog/midjourney-prompts/)\r\nHướng dẫn tạo Prompt Midjourney để in ảnh lên Áo thun / Cốc, với ví dụ.\r\n6. MidJourney Prompt MasterClass for AI Art (https://www.udemy.com/course/midjourney-prompt/)\r\nHọc cấu trúc của việc viết Prompt, phát triển kỹ năng tư duy tạo Prompt, cách thêm bớt cho phù hợp và điều chỉnh prompt.\r\n7. GPT01 - Tuyệt đỉnh ứng dụng ChatGPT (https://bit.ly/3rh1M6c)\r\nKhóa học này nói về nội dung cơ bản, nắm nền tảng, tuy nhiên theo mình mọi người nên đăng ký thành viên 199k/tháng để học tất cả các khóa (GPT + word + excel + ...) để tiết kiệm chi phí.\r\n8. You Probably Need A Robot (https://youprobablyneedarobot.com/)\r\nKhóa này dành cho các bạn muốn tiết kiệm 8 - 10 giờ/tuần qua các công cụ AI. Giá không hề rẻ ($199), nhưng cộng đồng chất lượng + có nhiều insight hay.\r\n9. ChatGPT Student's Pack (https://juliandigitaledge.gumroad.com/)\r\nTổng hợp 350 prompts ChatGPT cho Học sinh sinh viên, hàng miễn phí cho anh em dùng.\r\n10. Introduction to Generative AI (https://www.cloudskillsboost.google/course_templates/536)\r\nKhóa này của google, giới thiệu về Generative AI (MidJourney, SD,...) và dùng những công cụ của Google để tạo 1 app AI của riêng bạn.\r\nNgoài ra trên Group thì anh em có thể theo dõi các bài viết của các thành viên cứng như Tony Duc AI Bửu Trung Hồ Thương Tín để học cách ứng dụng AI vào công việc.\r\nThời gian tới thì mình và team sẽ tổng hợp các prompt ChatGPT & MidJourney cho các ngành nghề, anh em có đề xuất nghề nào thì để lại bình luận nhé.",
       "imageOrVideoUrl": "/uploads/imageOrVideo-1750236986686-385583487.jpg",
-      "createdAt": "2025-06-18T08:56:26.689Z"
+      "createdAt": "2025-06-18T08:56:26.689Z",
+      "likes": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "58dc"
+      ],
+      "dislikes": [],
+      "state": "pass"
+    },
+    {
+      "id": "44b0caea-94ff-4b17-84b4-6131fedc78bd",
+      "userId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "title": "10 Tool AI mới mà bạn nhất định phải thử qua",
+      "content": "1. http://Durable.co - AI build website, build web trong vòng 30s (hoặc ngắn hơn) dùng AI.\r\n2. http://Topapps.ai - Tổng hợp danh sách các App có tích hợp AI\r\n3. http://Boomy.com - Tạo nhạc bằng AI\r\n4. http://Tldv.io - À này thì siêu xịn, gắn vào Google Meet hoặc Zoom để tự tạo Recap/tổng hợp sau khi meeting.\r\n5. http://Guidde.com - Tạo SOP (tạm gọi là quy trình với AI)\r\n6. http://Insight7.io - AI để hiểu về insight của khách hàng.\r\n7. http://Kickresume.com - AI tạo CV cho các bạn (nhất là các bạn trẻ)\r\n8. http://Finalscout.com/AI - Tự động hóa khi liên hệ ứng viên trên LinkedIn \r\n9. http://Yatterplus.in - Này AI phụ tá cho Whatsapp, không khuyến khích xài lắm nhưng bài. gốc có nên để vào.\r\n10. http://Stockimg.ai - Tạo ảnh Stock bằng AI\r\nBài gốc trên Twitter của @hasantoxr, anh em thử ngay nào!!!!",
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750506617591-308414932.jpg",
+      "createdAt": "2025-06-21T11:50:17.597Z",
+      "likes": [
+        "db0308c9-2383-4a1f-bcfd-95d50de09dc9"
+      ],
+      "dislikes": [],
+      "state": "pass"
+    },
+    {
+      "id": "11952e5d-6b00-46aa-a680-bbd460c2ca66",
+      "userId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "title": "grg",
+      "content": "grg",
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-22T03:09:12.995Z",
+      "likes": [],
+      "dislikes": [],
+      "state": "fail"
+    },
+    {
+      "id": "b1fe3a4c-cad2-468d-af5e-5dc0e53860ef",
+      "userId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "title": "VEO 3 VS SEEDANCE 1.0 (Ai tạo video mới nhà Bytedance) 🔥 Không biết anh em thấy bên nào ngon hơn nhỉ 🤔",
+      "content": null,
+      "imageOrVideoUrl": "/uploads/imageOrVideo-1750566226593-690547898.mp4",
+      "createdAt": "2025-06-22T04:23:46.617Z",
+      "likes": [
+        "59d6d665-0abe-4201-b41f-5b7b242eb776",
+        "58dc",
+        "db0308c9-2383-4a1f-bcfd-95d50de09dc9"
+      ],
+      "dislikes": [],
+      "state": "pass"
+    },
+    {
+      "id": "b35edbba-fb01-4603-bfcc-fdc32e54d07c",
+      "userId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "title": "j",
+      "content": "j",
+      "imageOrVideoUrl": null,
+      "createdAt": "2025-06-22T09:59:27.497Z",
+      "likes": [],
+      "dislikes": [],
+      "state": "fail"
+    }
+  ],
+  "comments": [
+    {},
+    {
+      "id": "u3z61vs",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "58dc",
+      "content": "hay",
+      "parentId": null,
+      "likedBy": [
+        "dc3da2de-8edd-4d7c-a97c-055d78fa7261"
+      ],
+      "createdAt": "2025-06-20T14:23:00.124Z"
+    },
+    {
+      "id": "4aucoii",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "content": "dr",
+      "parentId": "u3z61vs",
+      "likedBy": [],
+      "createdAt": "2025-06-20T14:27:57.403Z"
+    },
+    {
+      "id": "1qfwudr",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "content": "hay",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-20T14:42:01.718Z"
+    },
+    {
+      "id": "0s0odng",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "58dc",
+      "content": "ok",
+      "parentId": "1qfwudr",
+      "likedBy": [],
+      "createdAt": "2025-06-21T10:29:16.778Z"
+    },
+    {
+      "id": "5dcde8e4-8c58-4052-ade6-cb71aec82d79",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "content": "g",
+      "parentId": "u3z61vs",
+      "likedBy": [],
+      "createdAt": "2025-06-21T10:32:51.364Z"
+    },
+    {
+      "id": "3be226dd-1855-49a2-9169-310432c50e64",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "content": "hay",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-21T10:32:54.979Z"
+    },
+    {
+      "id": "71f9b15f-8353-489c-bbf1-63ffaf7ff38a",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "58dc",
+      "content": "thanks",
+      "parentId": "3be226dd-1855-49a2-9169-310432c50e64",
+      "likedBy": [],
+      "createdAt": "2025-06-21T10:54:09.539Z"
+    },
+    {
+      "id": "01de73c5-3281-4452-9e1e-9025876ae3a1",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "userId": "58dc",
+      "content": "yes",
+      "parentId": "1qfwudr",
+      "likedBy": [],
+      "createdAt": "2025-06-21T10:56:03.157Z"
+    },
+    {
+      "id": "a79eed79-49b9-44ff-a41a-9cbe7596cc53",
+      "postId": "1ebec079-19f4-4187-af92-c377f1a4180a",
+      "userId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "content": "tuyệt",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-21T11:01:20.664Z"
+    },
+    {
+      "id": "sm5eefj",
+      "postId": "1ebec079-19f4-4187-af92-c377f1a4180a",
+      "userId": "58dc",
+      "content": "thanks!",
+      "parentId": "a79eed79-49b9-44ff-a41a-9cbe7596cc53",
+      "likedBy": [],
+      "createdAt": "2025-06-21T11:06:03.279Z"
+    },
+    {
+      "id": "05465ede-0004-4252-91d9-bcce8d9f3a1d",
+      "postId": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
+      "userId": "58dc",
+      "content": "hay",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-21T11:36:28.394Z"
+    },
+    {
+      "id": "dc3fd704-9a0e-4bd5-b575-61995b451376",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "userId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "content": "d",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-22T09:43:00.904Z"
+    },
+    {
+      "id": "939b28f8-fdd5-4a95-ac16-5df97ebaba1f",
+      "postId": "1ebec079-19f4-4187-af92-c377f1a4180a",
+      "userId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "content": "y",
+      "parentId": null,
+      "likedBy": [],
+      "createdAt": "2025-06-22T10:05:47.623Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "a65ac362-7e61-4ee0-bd86-5c3eac12c62a",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "reporterId": "58dc",
+      "reason": "fdf",
+      "createdAt": "2025-06-21T09:20:21.366Z",
+      "status": "pending"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "8d4c39df-882b-4056-8561-d764ae348097",
+      "recipientId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "actorId": "58dc",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "commentId": "71f9b15f-8353-489c-bbf1-63ffaf7ff38a",
+      "type": "new_reply",
+      "read": true,
+      "createdAt": "2025-06-21T10:54:09.539Z"
+    },
+    {
+      "id": "9ef659df-9171-4aeb-b9ee-a35a648e1abf",
+      "recipientId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "actorId": "58dc",
+      "postId": "8a12ddc8-ed52-4a57-a9a6-af8cdbd9c094",
+      "commentId": "01de73c5-3281-4452-9e1e-9025876ae3a1",
+      "type": "new_reply",
+      "read": true,
+      "createdAt": "2025-06-21T10:56:03.157Z"
+    },
+    {
+      "id": "bda98850-bb2b-40f1-a283-ec2c7d3e7441",
+      "recipientId": "64560f4c-f7db-4838-aa9f-a82d79388b08",
+      "actorId": "58dc",
+      "postId": "4ecb0e8a-30f7-4594-a49f-ff398665695a",
+      "commentId": "05465ede-0004-4252-91d9-bcce8d9f3a1d",
+      "type": "new_comment",
+      "read": true,
+      "createdAt": "2025-06-21T11:36:28.394Z"
+    },
+    {
+      "id": "7ea7b37d-fcea-4f96-9669-81c6ac2c58fd",
+      "recipientId": "dc3da2de-8edd-4d7c-a97c-055d78fa7261",
+      "actorId": "58dc",
+      "postId": "11952e5d-6b00-46aa-a680-bbd460c2ca66",
+      "commentId": null,
+      "type": "post_rejected",
+      "message": "Bài viết của bạn đã bị từ chối. Lý do: \"fdf\"",
+      "read": true,
+      "createdAt": "2025-06-22T03:10:34.603Z"
+    },
+    {
+      "id": "d6d02844-888f-4018-adb0-8a8057498e24",
+      "recipientId": "58dc",
+      "actorId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "postId": "ce95a74c-22ba-43dd-a7e7-c473cd245923",
+      "commentId": "dc3fd704-9a0e-4bd5-b575-61995b451376",
+      "type": "new_comment",
+      "read": true,
+      "createdAt": "2025-06-22T09:43:00.904Z"
+    },
+    {
+      "id": "06c3ed3a-6851-487b-8139-f8cb6d433f7a",
+      "recipientId": "58dc",
+      "actorId": "59d6d665-0abe-4201-b41f-5b7b242eb776",
+      "postId": "1ebec079-19f4-4187-af92-c377f1a4180a",
+      "commentId": "939b28f8-fdd5-4a95-ac16-5df97ebaba1f",
+      "type": "new_comment",
+      "read": true,
+      "createdAt": "2025-06-22T10:05:47.623Z"
     }
   ]
 }

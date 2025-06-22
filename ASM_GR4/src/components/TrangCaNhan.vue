@@ -131,6 +131,7 @@
 <script setup>
 import { ref, watch, onUnmounted } from 'vue';
 import { useAuth } from '../composables/useAuth.js';
+import { emitter } from '../eventBus.js';
 import {
   BForm,
   BLink,
@@ -178,7 +179,16 @@ const handleFileChange = async (event) => {
     const response = await fetch(`http://localhost:3000/upload-avatar/${user.value.id}`, { method: 'POST', body: formDataApi });
     if (!response.ok) throw new Error('Upload ảnh thất bại!');
     const updatedUserFromServer = await response.json();
-    setUser(updatedUserFromServer);
+    
+    setUser(updatedUserFromServer); // Cập nhật state global
+    
+    // <-- 2. PHÁT SỰ KIỆN SAU KHI CÓ DỮ LIỆU MỚI
+    emitter.emit('avatarUpdated', { 
+      userId: updatedUserFromServer.id, 
+      newAvatarUrl: updatedUserFromServer.avatarUrl 
+    });
+    
+
     alert('Ảnh đại diện đã được cập nhật thành công!');
   } catch (error) {
     console.error('Lỗi khi upload ảnh:', error);

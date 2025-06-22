@@ -1,3 +1,5 @@
+// vite.config.js
+
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -13,21 +15,21 @@ export default defineConfig({
     }
   },
 
-  // --- THÊM KHỐI CẤU HÌNH SERVER NÀY VÀO ---
+  // --- THAY THẾ TOÀN BỘ KHỐI SERVER BẰNG KHỐI NÀY ---
   server: {
-    // Chạy server trên 0.0.0.0 để có thể chia sẻ ra bên ngoài
     host: '0.0.0.0', 
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+    },
     
+    // Cấu hình proxy được tinh chỉnh, bao quát và dễ quản lý hơn
     proxy: {
-      // --- Rule 1: Cho tất cả các API bắt đầu bằng /api ---
-      // Ví dụ: /api/login sẽ được chuyển đến http://localhost:3000/api/login
+      // ✅ Proxy cho tất cả các API tùy chỉnh bắt đầu bằng /api
       '/api': {
-        target: 'http://localhost:3000', // Địa chỉ server backend của bạn
-        changeOrigin: true, // Cần thiết cho các virtual host
+        target: 'http://localhost:3000',
+        changeOrigin: true,
       },
-
-      // --- Rule 2: Cho các API tùy chỉnh không có /api ---
-      // Ví dụ: /upload-avatar/... sẽ được chuyển đến http://localhost:3000/upload-avatar/...
+      // ✅ Proxy cho việc upload file (nếu có route riêng không nằm trong /api)
       '/upload-avatar': {
         target: 'http://localhost:3000',
         changeOrigin: true,
@@ -36,23 +38,40 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
-      '/update-password': {
+       '/update-password': {
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
-      
-      // --- Rule 3: Cho các API mặc định của JSON Server (nếu có) ---
-      // Ví dụ: /users, /posts, /comments...
-      // Đây là một ví dụ, bạn có thể thêm các tài nguyên khác trong db.json vào đây
+      // ✅ Proxy cho tất cả các tài nguyên mặc định của json-server
       '/users': {
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
-      '/products': { // Ví dụ nếu bạn có resource 'products'
+      '/posts': {
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
-      // Thêm các tài nguyên khác của json-server vào đây nếu cần
+      '/products': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/comments': { // <-- BỔ SUNG QUAN TRỌNG
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/reports': { // <-- BỔ SUNG QUAN TRỌNG
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+       '/notifications': { // <-- BỔ SUNG QUAN TRỌNG
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      // ✅ Proxy cho thư mục chứa file tĩnh (ảnh, video)
+      '/uploads': { // <-- BỔ SUNG CỰC KỲ QUAN TRỌNG
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      }
     }
   }
 })

@@ -58,11 +58,20 @@ const routes = [
     meta: { requiresAuth: true } // Route này yêu cầu phải đăng nhập
   },
    {
-    path: '/trang-profile',
-    name: 'trang-profile',
-    component: () => import('../components/profile.vue'),
-    meta: { requiresAuth: true } // Route này yêu cầu phải đăng nhập
+   path: '/profile/:userId',
+    name: 'user-profile', // Đổi tên cho rõ ràng
+    // Đảm bảo đường dẫn đến component là đúng (tôi đề nghị đổi tên profile.vue -> UserProfile.vue)
+    component: () => import('../components/profile.vue'), 
+    // `props: true` sẽ tự động truyền các params của route (ở đây là `userId`) làm props cho component
+    props: true,
   },
+  {
+    // Đây là route động, `:id` sẽ là ID của bài viết
+    path: '/posts/:id',
+    name: 'PostDetail',
+    component: () => import('../components/DetailPost.vue'),
+    props: true // Tự động truyền params của route làm props cho component
+  }
 ]
 
 const router = createRouter({
